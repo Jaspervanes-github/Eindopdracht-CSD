@@ -73,7 +73,7 @@ public class MapFragment extends Fragment {
         mapView.setMultiTouchControls(true);
         mapView.setBuiltInZoomControls(true);
 
-        openRouteService = new OpenRouteService(mapView);
+        openRouteService = new OpenRouteService(mapView, fragmentContext);
 
         return view;
     }
@@ -102,6 +102,7 @@ public class MapFragment extends Fragment {
                 mapController.setCenter(point);
                 Marker startPoint = new Marker(mapView);
                 startPoint.setPosition(point);
+                startPoint.setIcon(getResources().getDrawable(R.drawable.my_location));
                 mapView.getOverlays().remove(currentLocation);
                 currentLocation = startPoint;
                 mapView.getOverlays().add(startPoint);

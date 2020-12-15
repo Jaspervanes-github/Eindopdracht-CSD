@@ -1,6 +1,9 @@
 package com.example.eindopdrachtcsdlarsrookenjaspervanes.okhttp;
 
+import android.content.Context;
 import android.util.Log;
+
+import com.example.eindopdrachtcsdlarsrookenjaspervanes.R;
 
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
@@ -24,6 +27,7 @@ import okhttp3.Response;
 
 public class OpenRouteService {
     private OkHttpClient client;
+    private Context context;
     public boolean isConnected;
 
     private OpenStreetMap openStreetMap;
@@ -33,11 +37,12 @@ public class OpenRouteService {
 
     public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
 
-    public OpenRouteService(MapView mapView) {
+    public OpenRouteService(MapView mapView, Context context) {
         this.client = new OkHttpClient();
         this.isConnected = false;
         this.openStreetMap = new OpenStreetMap();
         this.mapView = mapView;
+        this.context = context;
 
         Connect();
     }
@@ -157,8 +162,8 @@ public class OpenRouteService {
                                 }
 
                                 openStreetMap.drawRoute(mapView, points);
-                                openStreetMap.drawMarker(mapView, startPoint);
-                                openStreetMap.drawMarker(mapView, endPoint);
+                                openStreetMap.drawMarker(mapView, startPoint, context.getResources().getDrawable(R.drawable.waypoint_marker));
+                                openStreetMap.drawMarker(mapView, endPoint, context.getResources().getDrawable(R.drawable.waypoint_marker));
 
                             } catch (JSONException e) {
                                 e.printStackTrace();
@@ -204,7 +209,7 @@ public class OpenRouteService {
 //                                    System.out.println(i + ": " + cordArray.toString());
                                 }
                                 for (GeoPoint point : waypoints) {
-                                    openStreetMap.drawMarker(mapView, point);
+                                    openStreetMap.drawMarker(mapView, point, context.getResources().getDrawable(R.drawable.waypoint_marker));
                                 }
                                 openStreetMap.drawRoute(mapView, points);
                             } catch (JSONException e) {
