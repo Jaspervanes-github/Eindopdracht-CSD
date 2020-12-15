@@ -22,6 +22,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.eindopdrachtcsdlarsrookenjaspervanes.Data;
 import com.example.eindopdrachtcsdlarsrookenjaspervanes.R;
 import com.example.eindopdrachtcsdlarsrookenjaspervanes.okhttp.OpenRouteService;
 import com.example.eindopdrachtcsdlarsrookenjaspervanes.viewModels.MapViewModel;
@@ -56,7 +57,7 @@ public class MapFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         fragmentContext = getActivity().getBaseContext();
         Configuration.getInstance().load(fragmentContext, PreferenceManager.getDefaultSharedPreferences(fragmentContext));
-
+        Data.getInstance().setCurrentFragment(this);
         View view = inflater.inflate(R.layout.main_fragment, container, false);
 
         mapView = view.findViewById(R.id.mapView);

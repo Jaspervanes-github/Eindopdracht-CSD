@@ -52,6 +52,8 @@ public class FileManager {
     }
 
     //TODO: making a separator for the text that is saved in the file
-    //private ArrayList<>
+    //private ArrayList<EndPoint> readAllEndPoints(){
+    //
+    //}
 
 }

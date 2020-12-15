@@ -8,8 +8,10 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.eindopdrachtcsdlarsrookenjaspervanes.Data;
 import com.example.eindopdrachtcsdlarsrookenjaspervanes.R;
 import com.example.eindopdrachtcsdlarsrookenjaspervanes.viewModels.DetailFragmentViewModel;
 import com.example.eindopdrachtcsdlarsrookenjaspervanes.viewModels.MapViewModel;
@@ -25,6 +27,7 @@ public class DetailFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
+        Data.getInstance().setCurrentFragment(this);
         return inflater.inflate(R.layout.main_fragment, container, false);
     }
 
@@ -33,5 +36,16 @@ public class DetailFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         mViewModel = new ViewModelProvider(this).get(DetailFragmentViewModel.class);
         // TODO: Use the ViewModel
+    }
+
+
+    private Observer<Fragment> fragmentObserver(){
+        Observer<Fragment> observer = new Observer<Fragment>() {
+            @Override
+            public void onChanged(Fragment fragment) {
+
+            }
+        };
+        return observer;
     }
 }

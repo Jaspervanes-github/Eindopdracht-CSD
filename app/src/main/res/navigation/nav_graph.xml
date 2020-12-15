@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/detailFragment">
+    app:startDestination="@id/mapFragment">
 
     <fragment
         android:id="@+id/mapFragment"
@@ -12,6 +12,9 @@
         <action
             android:id="@+id/action_mapFragment_to_routeListFragment"
             app:destination="@id/routeListFragment" />
+        <action
+            android:id="@+id/action_mapFragment_to_quickRouteFragment"
+            app:destination="@id/quickRouteFragment" />
     </fragment>
     <fragment
         android:id="@+id/routeListFragment"
@@ -23,9 +26,56 @@
         <action
             android:id="@+id/action_routeListFragment_to_mapFragment"
             app:destination="@id/mapFragment" />
+        <action
+            android:id="@+id/action_routeListFragment_to_editFragment"
+            app:destination="@id/editFragment" />
+        <action
+            android:id="@+id/action_routeListFragment_to_quickRouteFragment"
+            app:destination="@id/quickRouteFragment" />
     </fragment>
     <fragment
         android:id="@+id/detailFragment"
         android:name="com.example.eindopdrachtcsdlarsrookenjaspervanes.fragments.DetailFragment"
-        android:label="DetailFragment" />
+        android:label="DetailFragment" >
+        <action
+            android:id="@+id/action_detailFragment_to_editFragment"
+            app:destination="@id/editFragment" />
+        <action
+            android:id="@+id/action_detailFragment_to_routeListFragment"
+            app:destination="@id/routeListFragment" />
+        <action
+            android:id="@+id/action_detailFragment_to_mapFragment"
+            app:destination="@id/mapFragment" />
+        <action
+            android:id="@+id/action_detailFragment_to_quickRouteFragment"
+            app:destination="@id/quickRouteFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/editFragment"
+        android:name="com.example.eindopdrachtcsdlarsrookenjaspervanes.fragments.EditFragment"
+        android:label="EditFragment">
+        <action
+            android:id="@+id/action_editFragment_to_routeListFragment"
+            app:destination="@id/routeListFragment" />
+        <action
+            android:id="@+id/action_editFragment_to_quickRouteFragment"
+            app:destination="@id/quickRouteFragment" />
+        <action
+            android:id="@+id/action_editFragment_to_mapFragment"
+            app:destination="@id/mapFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/quickRouteFragment"
+        android:name="com.example.eindopdrachtcsdlarsrookenjaspervanes.fragments.QuickRouteFragment"
+        android:label="QuickRouteFragment">
+
+        <action
+            android:id="@+id/action_quickRouteFragment_to_routeListFragment"
+            app:destination="@id/routeListFragment" />
+        <action
+            android:id="@+id/action_quickRouteFragment_to_mapFragment"
+            app:destination="@id/mapFragment" />
+    </fragment>
 </navigation>
