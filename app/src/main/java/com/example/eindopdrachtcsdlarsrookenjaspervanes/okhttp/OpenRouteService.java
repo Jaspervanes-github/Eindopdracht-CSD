@@ -55,7 +55,7 @@ public class OpenRouteService {
     private Request createPostRequest(String method, String json) {
         RequestBody requestBody = RequestBody.create(json, JSON);
         Request request = new Request.Builder().url("https://api.openrouteservice.org/v2/directions/" + method).
-                post(requestBody).addHeader("Authorization",api_key).build();
+                post(requestBody).addHeader("Authorization", api_key).build();
         return request;
     }
 //
@@ -99,7 +99,7 @@ public class OpenRouteService {
             lng += (result & 1) != 0 ? ~(result >> 1) : (result >> 1);
 
 
-            if(inclElevation){
+            if (inclElevation) {
                 result = 1;
                 shift = 0;
                 do {
@@ -114,7 +114,7 @@ public class OpenRouteService {
             try {
                 location.put(lat / 1E5);
                 location.put(lng / 1E5);
-                if(inclElevation){
+                if (inclElevation) {
                     location.put((float) (ele / 100));
                 }
                 geometry.put(location);
@@ -136,7 +136,7 @@ public class OpenRouteService {
 
                         @Override
                         public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                            Log.d("FAILURE", "In OnFailure() in example()");
+                            Log.d("FAILURE", "In OnFailure() in getRoute() single");
                         }
 
                         @Override
@@ -157,6 +157,9 @@ public class OpenRouteService {
                                 }
 
                                 openStreetMap.drawRoute(mapView, points);
+                                openStreetMap.drawMarker(mapView, startPoint);
+                                openStreetMap.drawMarker(mapView, endPoint);
+
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
@@ -171,36 +174,38 @@ public class OpenRouteService {
             double[][] coordinates = new double[waypoints.length][2];
 
             for (int i = 0; i < waypoints.length; i++) {
-                coordinates[i][0] = waypoints[i].getLatitude();
-                coordinates[i][1] = waypoints[i].getLongitude();
+                coordinates[i][0] = waypoints[i].getLongitude();
+                coordinates[i][1] = waypoints[i].getLatitude();
             }
 
-            client.newCall(createPostRequest(method, "{\"coordinates\":" + Arrays.deepToString(coordinates)  + ",\"language\":\"" + language + "\"}"))
+            client.newCall(createPostRequest(method, "{\"coordinates\":" + Arrays.deepToString(coordinates) + ",\"language\":\"" + language + "\"}"))
                     .enqueue(new Callback() {
 
                         @Override
                         public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                            Log.d("FAILURE", "In OnFailure() in getRoute()");
+                            Log.d("FAILURE", "In OnFailure() in getRoute() multiple");
                         }
 
                         @Override
                         public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                             try {
-                                Log.d("RESPONSE_STRING", response.body().string());
                                 JSONObject responseObject = new JSONObject(response.body().string());
                                 JSONArray routesArray = responseObject.getJSONArray("routes");
                                 JSONObject routes = (JSONObject) routesArray.get(0);
                                 String geometry = routes.getString("geometry");
-                                JSONArray coordinates = decodeGeometry(geometry,false);
+                                JSONArray coordinates = decodeGeometry(geometry, false);
 
                                 for (int i = 0; i < coordinates.length(); i++) {
-                                    JSONArray coordArray = (JSONArray) coordinates.get(i);
-                                    double lng = coordArray.getDouble(0);
-                                    double lat = coordArray.getDouble(1);
+                                    JSONArray cordArray = (JSONArray) coordinates.get(i);
+                                    double lat = cordArray.getDouble(0);
+                                    double lng = cordArray.getDouble(1);
                                     GeoPoint point = new GeoPoint(lat, lng);
                                     points.add(point);
+//                                    System.out.println(i + ": " + cordArray.toString());
                                 }
-
+                                for (GeoPoint point : waypoints) {
+                                    openStreetMap.drawMarker(mapView, point);
+                                }
                                 openStreetMap.drawRoute(mapView, points);
                             } catch (JSONException e) {
                                 e.printStackTrace();
