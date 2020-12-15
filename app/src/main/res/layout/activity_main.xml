@@ -22,7 +22,7 @@
 
     <FrameLayout
         android:id="@+id/main_fragment"
-        android:name="com.example.eindopdrachtcsdlarsrookenjaspervanes.viewModels.MainActivity"
+        android:name="com.example.eindopdrachtcsdlarsrookenjaspervanes.MainActivity"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginBottom="10dp"

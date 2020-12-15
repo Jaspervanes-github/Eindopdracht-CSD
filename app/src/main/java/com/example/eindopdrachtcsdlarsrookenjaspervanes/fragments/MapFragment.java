@@ -23,6 +23,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.eindopdrachtcsdlarsrookenjaspervanes.R;
+import com.example.eindopdrachtcsdlarsrookenjaspervanes.okhttp.OpenRouteService;
 import com.example.eindopdrachtcsdlarsrookenjaspervanes.viewModels.MapViewModel;
 
 import org.osmdroid.api.IMapController;
@@ -42,6 +43,8 @@ public class MapFragment extends Fragment {
     private MapView mapView;
 
     private Marker currentLocation;
+
+    private OpenRouteService openRouteService;
 
     public static MapFragment newInstance() {
         return new MapFragment();
@@ -73,6 +76,8 @@ public class MapFragment extends Fragment {
         mapView.setMultiTouchControls(true);
         mapView.setBuiltInZoomControls(true);
 
+        openRouteService = new OpenRouteService(mapView);
+
         return view;
     }
 
@@ -81,6 +86,10 @@ public class MapFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         getLocation();
+
+        openRouteService.getRoute(new GeoPoint(51.5897, 4.7616),
+                new GeoPoint(51.5957, 4.7795),
+                "driving-car");
     }
 
     public void getLocation() {
