@@ -87,9 +87,15 @@ public class MapFragment extends Fragment {
 
         getLocation();
 
-        openRouteService.getRoute(new GeoPoint(51.5897, 4.7616),
-                new GeoPoint(51.5957, 4.7795),
-                "driving-car");
+//        openRouteService.getRoute(new GeoPoint(51.5897, 4.7616),
+//                new GeoPoint(51.5957, 4.7795),
+//                "driving-car");
+
+        openRouteService.getRoute(new GeoPoint[]{
+                new GeoPoint(51.5897, 4.7616),
+                new GeoPoint(51.592080, 4.767920),
+                new GeoPoint(51.5957, 4.7795)
+        }, "driving-car", "de");
     }
 
     public void getLocation() {
