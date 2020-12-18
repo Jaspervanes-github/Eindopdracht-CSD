@@ -2,6 +2,7 @@ package com.example.eindopdrachtcsdlarsrookenjaspervanes.fragments;
 
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.Manifest;
@@ -35,7 +36,7 @@ import org.osmdroid.views.MapView;
 import org.osmdroid.views.overlay.Marker;
 
 
-public class MapFragment extends Fragment {
+public class MapFragment extends Fragment implements LifecycleOwner {
 
     private MapViewModel mViewModel;
 

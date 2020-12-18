@@ -20,9 +20,11 @@ import com.example.eindopdrachtcsdlarsrookenjaspervanes.fragments.EditFragment;
 import com.example.eindopdrachtcsdlarsrookenjaspervanes.fragments.MapFragment;
 import com.example.eindopdrachtcsdlarsrookenjaspervanes.fragments.QuickRouteFragment;
 import com.example.eindopdrachtcsdlarsrookenjaspervanes.fragments.RouteListFragment;
+import com.example.eindopdrachtcsdlarsrookenjaspervanes.models.EndPoint;
 import com.example.eindopdrachtcsdlarsrookenjaspervanes.viewModels.ViewModel;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import java.util.ArrayList;
 import java.util.zip.Inflater;
 
 public class MainActivity extends AppCompatActivity {
@@ -40,7 +42,11 @@ public class MainActivity extends AppCompatActivity {
         navView.setOnNavigationItemSelectedListener(navListener);
 
         ViewModel viewModel = new ViewModelProvider(this).get(ViewModel.class);
-
+        ArrayList<EndPoint> testValues = new ArrayList<>();
+        for (int i = 0; i < 10; i++) {
+            testValues.add(new EndPoint("Point " + i, null));
+        }
+        viewModel.setAllEndPoints(testValues);
 //        if (savedInstanceState == null) {
 //            getSupportFragmentManager().beginTransaction()
 //                    .replace(R.id.container, MapFragment.newInstance())

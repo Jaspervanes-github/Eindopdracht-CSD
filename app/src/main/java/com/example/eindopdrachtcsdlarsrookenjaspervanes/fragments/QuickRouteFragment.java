@@ -8,10 +8,11 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LifecycleOwner;
 
 import com.example.eindopdrachtcsdlarsrookenjaspervanes.Data;
 
-public class QuickRouteFragment extends Fragment {
+public class QuickRouteFragment extends Fragment implements LifecycleOwner {
 
     @Nullable
     @Override
