@@ -10,9 +10,8 @@
         android:id="@+id/editTextInputCoordinates"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@color/cardview_dark_background"
         android:ems="10"
-        android:inputType="numberDecimal"
+        android:inputType="textPassword|number"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.19"
@@ -37,7 +36,6 @@
         android:id="@+id/spinnerMethod"
         android:layout_width="251dp"
         android:layout_height="43dp"
-        android:background="@color/purple_700"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.963"
@@ -77,13 +75,13 @@
         android:layout_height="202dp"
         android:layout_marginTop="22dp"
         android:layout_marginEnd="12dp"
-        android:background="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/imageButtonMoveUp"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextInputCoordinates"
-        app:layout_constraintVertical_bias="0.042" />
+        app:layout_constraintVertical_bias="0.042"
+        android:background="@drawable/listview_border"/>
 
     <ImageButton
         android:id="@+id/imageButtonMoveUp"
