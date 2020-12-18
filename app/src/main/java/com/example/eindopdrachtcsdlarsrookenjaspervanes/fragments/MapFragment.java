@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.eindopdrachtcsdlarsrookenjaspervanes.Data;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
@@ -53,7 +54,7 @@ public class MapFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         fragmentContext = getActivity().getBaseContext();
         Configuration.getInstance().load(fragmentContext, PreferenceManager.getDefaultSharedPreferences(fragmentContext));
-
+        Data.getInstance().setCurrentFragment(this);
         View view = inflater.inflate(R.layout.main_fragment, container, false);
 
         mapView = view.findViewById(R.id.mapView);

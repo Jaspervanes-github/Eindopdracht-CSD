@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Eindopdracht CSD Lars Rook en Jasper van Es</string>
+    <string name="addButtonRecyclerView">Add new endPoint</string>
+
+
+<!--  this is for the bottom navigation bar  -->
+    <string name="quickRoute">Quick route</string>
+    <string name="map">Map</string>
+    <string name="destinations">Destinations</string>
 </resources>
