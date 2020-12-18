@@ -74,7 +74,7 @@ public class MapFragment extends Fragment {
         mapView.setMultiTouchControls(true);
         mapView.setBuiltInZoomControls(true);
 
-        openRouteService = new OpenRouteService(mapView, fragmentContext);
+        openRouteService = new OpenRouteService(mapView, fragmentContext, view);
 
         return view;
     }
@@ -98,6 +98,10 @@ public class MapFragment extends Fragment {
         LocationListener locationListener = new LocationListener() {
             @Override
             public void onLocationChanged(@NonNull Location location) {
+                if (getView() == null) {
+                    return;
+                }
+
                 Log.d("Latitude", "onLocationChanged: " + location.getLatitude());
                 GeoPoint point = new GeoPoint(location.getLatitude(), location.getLongitude());
                 mapController.setCenter(point);
