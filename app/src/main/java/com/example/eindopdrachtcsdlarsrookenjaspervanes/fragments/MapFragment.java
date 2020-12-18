@@ -13,13 +13,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.eindopdrachtcsdlarsrookenjaspervanes.Data;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import com.example.eindopdrachtcsdlarsrookenjaspervanes.Data;
 import com.example.eindopdrachtcsdlarsrookenjaspervanes.R;
 import com.example.eindopdrachtcsdlarsrookenjaspervanes.okhttp.OpenRouteService;
 import com.example.eindopdrachtcsdlarsrookenjaspervanes.viewModels.MapViewModel;
