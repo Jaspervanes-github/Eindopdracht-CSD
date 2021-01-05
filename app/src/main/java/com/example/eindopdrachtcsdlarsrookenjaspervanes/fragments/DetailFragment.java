@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -15,9 +17,12 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.eindopdrachtcsdlarsrookenjaspervanes.Data;
 import com.example.eindopdrachtcsdlarsrookenjaspervanes.R;
+import com.example.eindopdrachtcsdlarsrookenjaspervanes.models.EndPoint;
 import com.example.eindopdrachtcsdlarsrookenjaspervanes.viewModels.DetailFragmentViewModel;
 import com.example.eindopdrachtcsdlarsrookenjaspervanes.viewModels.MapViewModel;
 import com.example.eindopdrachtcsdlarsrookenjaspervanes.viewModels.ViewModel;
+
+import org.osmdroid.util.GeoPoint;
 
 import java.sql.SQLOutput;
 
@@ -35,8 +40,19 @@ public class DetailFragment extends Fragment implements LifecycleOwner {
         Data.getInstance().setCurrentFragment(this);
         mViewModel = new ViewModelProvider(getActivity()).get(ViewModel.class);
 
-        TextView test = view.findViewById(R.id.textViewTest);
-        test.setText(mViewModel.getSelectedEndPoint().getValue().getName());
+        TextView textView_name = view.findViewById(R.id.detailFragment_textView_name_value);
+        TextView textView_endpoint = view.findViewById(R.id.detailFragment_textView_endpoint_value);
+        ListView listView_pointInBetween = view.findViewById(R.id.detailFragment_listView_pointsInBetween);
+
+        EndPoint selectedPoint = mViewModel.getSelectedEndPoint().getValue();
+        textView_name.setText(selectedPoint.getName());
+        textView_endpoint.setText("Latitude : " + selectedPoint.getEndPoint().getLatitude() + ", " + "Longitude: " + selectedPoint.getEndPoint().getLongitude());
+
+        ArrayAdapter<GeoPoint> arrayAdapter = new ArrayAdapter<GeoPoint>(this.getContext(), android.R.layout.simple_list_item_1);
+        arrayAdapter.addAll(selectedPoint.getPointInBetween());
+        listView_pointInBetween.setAdapter(arrayAdapter);
+        arrayAdapter.notifyDataSetChanged();
+
         return view;
     }
 

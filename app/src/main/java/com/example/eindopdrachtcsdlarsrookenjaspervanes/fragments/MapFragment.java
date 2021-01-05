@@ -28,6 +28,7 @@ import com.example.eindopdrachtcsdlarsrookenjaspervanes.Data;
 import com.example.eindopdrachtcsdlarsrookenjaspervanes.R;
 import com.example.eindopdrachtcsdlarsrookenjaspervanes.okhttp.OpenRouteService;
 import com.example.eindopdrachtcsdlarsrookenjaspervanes.viewModels.MapViewModel;
+import com.example.eindopdrachtcsdlarsrookenjaspervanes.viewModels.ViewModel;
 
 import org.osmdroid.api.IMapController;
 import org.osmdroid.config.Configuration;

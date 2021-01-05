@@ -7,4 +7,9 @@
     <string name="quickRoute">Quick route</string>
     <string name="map">Map</string>
     <string name="destinations">Destinations</string>
+
+    <string name="textView_name">Name: </string>
+    <string name="textView_endpoint">Endpoint: </string>
+    <string name="textView_pointInBetween">Points in between: </string>
+    <string name="button_start">Start</string>
 </resources>

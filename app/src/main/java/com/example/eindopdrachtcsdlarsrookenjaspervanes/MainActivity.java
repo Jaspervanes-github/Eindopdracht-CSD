@@ -24,6 +24,8 @@ import com.example.eindopdrachtcsdlarsrookenjaspervanes.models.EndPoint;
 import com.example.eindopdrachtcsdlarsrookenjaspervanes.viewModels.ViewModel;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import org.osmdroid.util.GeoPoint;
+
 import java.util.ArrayList;
 import java.util.zip.Inflater;
 
@@ -44,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
         ViewModel viewModel = new ViewModelProvider(this).get(ViewModel.class);
         ArrayList<EndPoint> testValues = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
-            testValues.add(new EndPoint("Point " + i, null));
+            testValues.add(new EndPoint("Point " + i, new GeoPoint(51.794970, 4.654290)));
         }
         viewModel.setAllEndPoints(testValues);
 //        if (savedInstanceState == null) {
