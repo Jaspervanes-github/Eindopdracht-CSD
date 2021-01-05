@@ -26,8 +26,10 @@ import androidx.fragment.app.Fragment;
 
 import com.example.eindopdrachtcsdlarsrookenjaspervanes.Data;
 import com.example.eindopdrachtcsdlarsrookenjaspervanes.R;
+import com.example.eindopdrachtcsdlarsrookenjaspervanes.geofencing.GeoFenceSetup;
 import com.example.eindopdrachtcsdlarsrookenjaspervanes.okhttp.OpenRouteService;
 import com.example.eindopdrachtcsdlarsrookenjaspervanes.viewModels.MapViewModel;
+import com.example.eindopdrachtcsdlarsrookenjaspervanes.viewModels.ViewModel;
 
 import org.osmdroid.api.IMapController;
 import org.osmdroid.config.Configuration;
@@ -36,10 +38,13 @@ import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
 import org.osmdroid.views.overlay.Marker;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 
 public class MapFragment extends Fragment implements LifecycleOwner {
 
-    private MapViewModel mViewModel;
+    private ViewModel mViewModel;
 
     private Context fragmentContext;
     private IMapController mapController;
@@ -48,10 +53,12 @@ public class MapFragment extends Fragment implements LifecycleOwner {
     private Marker currentLocation;
 
     private OpenRouteService openRouteService;
+    private GeoFenceSetup setupGF;
 
     public static MapFragment newInstance() {
         return new MapFragment();
     }
+
 
     @Nullable
     @Override
@@ -61,6 +68,8 @@ public class MapFragment extends Fragment implements LifecycleOwner {
         Configuration.getInstance().load(fragmentContext, PreferenceManager.getDefaultSharedPreferences(fragmentContext));
         Data.getInstance().setCurrentFragment(this);
         View view = inflater.inflate(R.layout.main_fragment, container, false);
+
+        mViewModel = new ViewModelProvider(requireActivity()).get(ViewModel.class);
 
         mapView = view.findViewById(R.id.mapView);
         mapView.setUseDataConnection(true);
@@ -80,6 +89,19 @@ public class MapFragment extends Fragment implements LifecycleOwner {
         mapView.setBuiltInZoomControls(true);
 
         openRouteService = new OpenRouteService(mapView, fragmentContext, view);
+        setupGF = new GeoFenceSetup(mViewModel.getMainActivity().getValue().getApplicationContext(), mViewModel.getMainActivity().getValue());
+
+        if (mViewModel.getIsFollowingRoute().getValue()) {
+            openRouteService.getRoute(mViewModel.getCurrentRoute().getValue(), mViewModel.getMethod().getValue(), "en");
+            if(!mViewModel.getIsGeofencing().getValue()){
+                setupGF.setupGeoFencing(Arrays.asList(mViewModel.getCurrentRoute().getValue()));
+                mViewModel.setIsGeofencing(true);
+                Log.d("@@@@@@@@@@@@@@", "Geofencing is setup");
+            }
+        }else if(mViewModel.getCurrentRoute().getValue() != null){
+            setupGF.removeGeoFences(Arrays.asList(mViewModel.getCurrentRoute().getValue()));
+            mViewModel.setIsGeofencing(false);
+        }
 
         return view;
     }
@@ -90,11 +112,11 @@ public class MapFragment extends Fragment implements LifecycleOwner {
 
         getLocation();
 
-        openRouteService.getRoute(new GeoPoint[]{
-                new GeoPoint(51.813297, 4.690093),
-                new GeoPoint(49.41943,8.686507),
-                new GeoPoint(49.420318,8.687872)
-        }, "driving-car", "de");
+//        openRouteService.getRoute(new GeoPoint[]{
+//                new GeoPoint(51.813297, 4.690093),
+//                new GeoPoint(49.41943, 8.686507),
+//                new GeoPoint(49.420318, 8.687872)
+//        }, "driving-car", "de");
     }
 
     public void getLocation() {
@@ -115,6 +137,7 @@ public class MapFragment extends Fragment implements LifecycleOwner {
                 startPoint.setIcon(getResources().getDrawable(R.drawable.my_location));
                 mapView.getOverlays().remove(currentLocation);
                 currentLocation = startPoint;
+                mViewModel.setCurrentLocation(currentLocation.getPosition());
                 mapView.getOverlays().add(startPoint);
             }
         };

@@ -47,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
             testValues.add(new EndPoint("Point " + i, null));
         }
         viewModel.setAllEndPoints(testValues);
+        viewModel.setMainActivity(this);
 //        if (savedInstanceState == null) {
 //            getSupportFragmentManager().beginTransaction()
 //                    .replace(R.id.container, MapFragment.newInstance())
