@@ -12,16 +12,17 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
 
 import com.example.eindopdrachtcsdlarsrookenjaspervanes.Data;
 import com.example.eindopdrachtcsdlarsrookenjaspervanes.R;
@@ -78,7 +79,7 @@ public class MapFragment extends Fragment implements LifecycleOwner {
         mapView.setMultiTouchControls(true);
         mapView.setBuiltInZoomControls(true);
 
-        openRouteService = new OpenRouteService(mapView);
+        openRouteService = new OpenRouteService(mapView, fragmentContext, view);
 
         return view;
     }
@@ -89,9 +90,11 @@ public class MapFragment extends Fragment implements LifecycleOwner {
 
         getLocation();
 
-        openRouteService.getRoute(new GeoPoint(51.5897, 4.7616),
-                new GeoPoint(51.5957, 4.7795),
-                "driving-car");
+        openRouteService.getRoute(new GeoPoint[]{
+                new GeoPoint(51.813297, 4.690093),
+                new GeoPoint(49.41943,8.686507),
+                new GeoPoint(49.420318,8.687872)
+        }, "driving-car", "de");
     }
 
     public void getLocation() {
@@ -100,11 +103,16 @@ public class MapFragment extends Fragment implements LifecycleOwner {
         LocationListener locationListener = new LocationListener() {
             @Override
             public void onLocationChanged(@NonNull Location location) {
+                if (getView() == null) {
+                    return;
+                }
+
                 Log.d("Latitude", "onLocationChanged: " + location.getLatitude());
                 GeoPoint point = new GeoPoint(location.getLatitude(), location.getLongitude());
                 mapController.setCenter(point);
                 Marker startPoint = new Marker(mapView);
                 startPoint.setPosition(point);
+                startPoint.setIcon(getResources().getDrawable(R.drawable.my_location));
                 mapView.getOverlays().remove(currentLocation);
                 currentLocation = startPoint;
                 mapView.getOverlays().add(startPoint);
