@@ -52,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
 //                    .replace(R.id.container, MapFragment.newInstance())
 //                    .commitNow();
 //        }
+//        System.out.println(getBaseContext().getResources().getConfiguration().getLocales().toLanguageTags());
 
 //        fragmentManager = getSupportFragmentManager();
 //        if (fragmentManager.findFragmentById(R.id.main_fragment) == null) {
