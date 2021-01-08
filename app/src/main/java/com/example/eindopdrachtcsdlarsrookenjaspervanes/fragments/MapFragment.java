@@ -97,7 +97,7 @@ public class MapFragment extends Fragment implements LifecycleOwner {
         mapView.setBuiltInZoomControls(true);
 
         openRouteService = new OpenRouteService(mapView, fragmentContext, view);
-        setupGF = new GeoFenceSetup(mViewModel.getMainActivity().getValue().getApplicationContext(), mViewModel.getMainActivity().getValue());
+        setupGF = new GeoFenceSetup(requireActivity());
 
         refreshMap();
 
