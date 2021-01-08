@@ -66,7 +66,6 @@ public class RouteListFragment extends Fragment implements OnItemClickListener, 
     @Override
     public void onItemClick(int clickPosition) {
         mViewModel.setSelectedEndPoint(mViewModel.getAllEndPoints().getValue().get(clickPosition));
-        System.out.println("GOT A CLICK AT THE ONITEMCLICK");
         Navigation.findNavController(getActivity(), R.id.fragmentContainer).navigate(R.id.action_routeListFragment_to_detailFragment);
     }
 

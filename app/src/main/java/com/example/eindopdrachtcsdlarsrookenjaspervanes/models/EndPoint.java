@@ -16,6 +16,8 @@ public class EndPoint {
         this.name = nameDestination;
         this.endPoint = endPoint;
         this.pointInBetween = new ArrayList<>();
+        this.pointInBetween.add(new GeoPoint(51.794920, 4.654280));
+        this.pointInBetween.add(new GeoPoint(51.794970, 4.654290 ));
     }
 
     public String getName() {

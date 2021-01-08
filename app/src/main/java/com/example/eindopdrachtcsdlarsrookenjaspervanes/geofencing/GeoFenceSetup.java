@@ -34,10 +34,9 @@ public class GeoFenceSetup {
     private GeoFenceHelper geoFenceHelper;
     private int BACKGROUND_LOCATION_ACCESS_REQUEST_CODE = 10002;
 
-    public GeoFenceSetup(Context constrcontext, Activity appActivity) {
-        this.context = constrcontext;
+    public GeoFenceSetup(Activity appActivity) {
         this.appActivity = appActivity;
-
+        this.context = appActivity.getApplicationContext();
     }
 
     public void setupGeoFencing(List<GeoPoint> waypoints) {
