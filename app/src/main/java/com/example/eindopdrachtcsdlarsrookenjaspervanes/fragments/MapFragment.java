@@ -40,6 +40,7 @@ import org.osmdroid.views.overlay.Marker;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 
 public class MapFragment extends Fragment implements LifecycleOwner {
@@ -94,7 +95,8 @@ public class MapFragment extends Fragment implements LifecycleOwner {
         if (mViewModel.getIsFollowingRoute().getValue()) {
             openRouteService.getRoute(mViewModel.getCurrentRoute().getValue(), mViewModel.getMethod().getValue(), "en");
             if(!mViewModel.getIsGeofencing().getValue()){
-                setupGF.setupGeoFencing(Arrays.asList(mViewModel.getCurrentRoute().getValue()));
+                List<GeoPoint> waypoints = Arrays.asList(mViewModel.getCurrentRoute().getValue());
+                setupGF.setupGeoFencing(waypoints);
                 mViewModel.setIsGeofencing(true);
                 Log.d("@@@@@@@@@@@@@@", "Geofencing is setup");
             }
@@ -136,8 +138,21 @@ public class MapFragment extends Fragment implements LifecycleOwner {
                 startPoint.setPosition(point);
                 startPoint.setIcon(getResources().getDrawable(R.drawable.my_location));
                 mapView.getOverlays().remove(currentLocation);
+
                 currentLocation = startPoint;
                 mViewModel.setCurrentLocation(currentLocation.getPosition());
+
+                //removes old location of user
+                List<GeoPoint> tempList = new ArrayList<>();
+                if(mViewModel.getCurrentRoute().getValue() != null )
+                tempList.add(mViewModel.getCurrentRoute().getValue()[0]);
+                setupGF.removeGeoFences(tempList);
+
+                //adds new location of user
+                tempList.clear();
+                tempList.add(currentLocation.getPosition());
+                setupGF.setupGeoFencing(tempList);
+
                 mapView.getOverlays().add(startPoint);
             }
         };

@@ -37,18 +37,33 @@ public class GeoFenceBroadcastReceiver extends BroadcastReceiver {
         int transitionType = geofencingEvent.getGeofenceTransition();
 
         switch (transitionType) {
-            case Geofence.GEOFENCE_TRANSITION_ENTER:
+            case Geofence.GEOFENCE_TRANSITION_ENTER: {
                 Toast.makeText(context, "GEOFENCE_TRANSITION_ENTER", Toast.LENGTH_LONG).show();
                 Log.d(TAG, "GEOFENCE_TRANSITION_ENTER");
+
+//                if(id != #0){
+//                    you have entered a waypoint, show toast
+//                }else if(id == last waypoint){
+//                    toast(you have arrived at destination your final destination)
+//            }
                 break;
-            case Geofence.GEOFENCE_TRANSITION_DWELL:
+            }
+            case Geofence.GEOFENCE_TRANSITION_DWELL: {
                 Toast.makeText(context, "GEOFENCE_TRANSITION_DWELL", Toast.LENGTH_LONG).show();
                 Log.d(TAG, "GEOFENCE_TRANSITION_DWELL");
                 break;
-            case Geofence.GEOFENCE_TRANSITION_EXIT:
+            }
+            case Geofence.GEOFENCE_TRANSITION_EXIT: {
                 Toast.makeText(context, "GEOFENCE_TRANSITION_EXIT", Toast.LENGTH_LONG).show();
                 Log.d(TAG, "GEOFENCE_TRANSITION_EXIT");
+
+//                if(id == #0){
+//                    calculate route and set in viewmodel
+//                (may want to only calculate route from location to next waypoint, this is better for performance)??? does it matter
+//                }
+
                 break;
+            }
 
 
         }
