@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.example.eindopdrachtcsdlarsrookenjaspervanes.database.Database;
 import com.example.eindopdrachtcsdlarsrookenjaspervanes.fragments.DetailFragment;
 import com.example.eindopdrachtcsdlarsrookenjaspervanes.fragments.EditFragment;
 import com.example.eindopdrachtcsdlarsrookenjaspervanes.fragments.MapFragment;
@@ -32,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
     private Data data = Data.getInstance();
 //    private FragmentManager fragmentManager;
 //    private MapFragment mapFragment;
+    private Database db;
 
 
     @Override
@@ -62,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
 //        } else {
 //            mapFragment = (MapFragment) fragmentManager.findFragmentById(R.id.main_fragment);
 //        }
-
+        db = Database.getInstance(this);
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener navListener =
