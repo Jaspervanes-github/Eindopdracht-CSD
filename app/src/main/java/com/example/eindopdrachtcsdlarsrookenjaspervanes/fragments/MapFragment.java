@@ -18,6 +18,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -51,7 +53,9 @@ public class MapFragment extends Fragment implements LifecycleOwner {
     private Context fragmentContext;
     private IMapController mapController;
     private MapView mapView;
+    private ImageButton ibCenterMap;
 
+    private boolean isCenterMode;
     private Marker currentLocation;
 
     private OpenRouteService openRouteService;
@@ -80,6 +84,8 @@ public class MapFragment extends Fragment implements LifecycleOwner {
         mapController = mapView.getController();
         mapController.setZoom(14);
 
+        isCenterMode = true;
+
         if (ActivityCompat.checkSelfPermission(this.getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
                 ActivityCompat.checkSelfPermission(this.getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this.getActivity(), new String[]{
@@ -94,6 +100,21 @@ public class MapFragment extends Fragment implements LifecycleOwner {
         setupGF = new GeoFenceSetup(mViewModel.getMainActivity().getValue().getApplicationContext(), mViewModel.getMainActivity().getValue());
 
         refreshMap();
+
+        ibCenterMap = view.findViewById(R.id.ibCenterMap);
+        ibCenterMap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(currentLocation != null) {
+                    isCenterMode = !isCenterMode;
+                    if(isCenterMode)
+                    Toast.makeText(fragmentContext,"You are now in center-mode", Toast.LENGTH_SHORT).show();
+                    if(!isCenterMode)
+                        Toast.makeText(fragmentContext,"You are no longer in center-mode", Toast.LENGTH_SHORT).show();
+//                    mapController.setCenter(mViewModel.getCurrentLocation().getValue());
+                }
+            }
+        });
 
         return view;
     }
@@ -123,6 +144,7 @@ public class MapFragment extends Fragment implements LifecycleOwner {
 
                 Log.d("Latitude", "onLocationChanged: " + location.getLatitude());
                 GeoPoint point = new GeoPoint(location.getLatitude(), location.getLongitude());
+                if(isCenterMode)
                 mapController.setCenter(point);
                 Marker startPoint = new Marker(mapView);
                 startPoint.setPosition(point);
@@ -133,7 +155,7 @@ public class MapFragment extends Fragment implements LifecycleOwner {
                 mViewModel.setCurrentLocation(currentLocation.getPosition());
 
 //                if(is following route from current location) {
-                
+
                     //removes old location of user
                     List<GeoPoint> tempList = new ArrayList<>();
                     if (mViewModel.getCurrentRoute().getValue() != null)
