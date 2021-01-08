@@ -6,6 +6,9 @@ import android.content.Intent;
 import android.util.Log;
 import android.widget.Toast;
 
+import androidx.lifecycle.ViewModelProvider;
+
+import com.example.eindopdrachtcsdlarsrookenjaspervanes.viewModels.ViewModel;
 import com.google.android.gms.location.Geofence;
 import com.google.android.gms.location.GeofencingEvent;
 
@@ -14,6 +17,8 @@ import java.util.List;
 import static android.content.ContentValues.TAG;
 
 public class GeoFenceBroadcastReceiver extends BroadcastReceiver {
+
+    private ViewModel mViewModel;
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -46,6 +51,16 @@ public class GeoFenceBroadcastReceiver extends BroadcastReceiver {
 //                }else if(id == last waypoint){
 //                    toast(you have arrived at destination your final destination)
 //            }
+
+//                if (!database.pointsVisited.contains(waypoint)) {
+//                if(pointsVisited.length == 0){
+//                pointsvisited.add(currentLocation)
+//                   }
+//                    pointsVisited.add(waypoint)
+//                    currentroute.remove(waypoint)
+
+//                refresh map???
+//                }
                 break;
             }
             case Geofence.GEOFENCE_TRANSITION_DWELL: {

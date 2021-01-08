@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModelProvider;
 import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -92,18 +93,7 @@ public class MapFragment extends Fragment implements LifecycleOwner {
         openRouteService = new OpenRouteService(mapView, fragmentContext, view);
         setupGF = new GeoFenceSetup(mViewModel.getMainActivity().getValue().getApplicationContext(), mViewModel.getMainActivity().getValue());
 
-        if (mViewModel.getIsFollowingRoute().getValue()) {
-            openRouteService.getRoute(mViewModel.getCurrentRoute().getValue(), mViewModel.getMethod().getValue(), "en");
-            if(!mViewModel.getIsGeofencing().getValue()){
-                List<GeoPoint> waypoints = Arrays.asList(mViewModel.getCurrentRoute().getValue());
-                setupGF.setupGeoFencing(waypoints);
-                mViewModel.setIsGeofencing(true);
-                Log.d("@@@@@@@@@@@@@@", "Geofencing is setup");
-            }
-        }else if(mViewModel.getCurrentRoute().getValue() != null){
-            setupGF.removeGeoFences(Arrays.asList(mViewModel.getCurrentRoute().getValue()));
-            mViewModel.setIsGeofencing(false);
-        }
+        refreshMap();
 
         return view;
     }
@@ -144,14 +134,22 @@ public class MapFragment extends Fragment implements LifecycleOwner {
 
                 //removes old location of user
                 List<GeoPoint> tempList = new ArrayList<>();
-                if(mViewModel.getCurrentRoute().getValue() != null )
-                tempList.add(mViewModel.getCurrentRoute().getValue()[0]);
+                if (mViewModel.getCurrentRoute().getValue() != null)
+                    tempList.add(mViewModel.getCurrentRoute().getValue()[0]);
                 setupGF.removeGeoFences(tempList);
 
                 //adds new location of user
                 tempList.clear();
                 tempList.add(currentLocation.getPosition());
                 setupGF.setupGeoFencing(tempList);
+
+                if (mViewModel.getPointsVisited().getValue() != null) {
+                    //make sure to always add startpoint and currentLocation to pointsVisited
+                    GeoPoint[] pointsVisited = mViewModel.getPointsVisited().getValue();
+                        pointsVisited[pointsVisited.length - 1] = currentLocation.getPosition();
+                        mViewModel.setPointsVisited(pointsVisited);
+                        refreshMap();
+                }
 
                 mapView.getOverlays().add(startPoint);
             }
@@ -162,5 +160,23 @@ public class MapFragment extends Fragment implements LifecycleOwner {
         }
     }
 
-
+        public void refreshMap(){
+            if (mViewModel.getIsFollowingRoute().getValue()) {
+                if (mViewModel.getPointsVisited().getValue() != null) {
+                    openRouteService.getRoute(mViewModel.getPointsVisited().getValue(), mViewModel.getMethod().getValue(),
+                            "en", R.drawable.waypoint_marker, Color.YELLOW);
+                }
+                openRouteService.getRoute(mViewModel.getCurrentRoute().getValue(), mViewModel.getMethod().getValue(),
+                        "en", R.drawable.waypoint_marker, Color.RED);
+                if (!mViewModel.getIsGeofencing().getValue()) {
+                    List<GeoPoint> waypoints = Arrays.asList(mViewModel.getCurrentRoute().getValue());
+                    setupGF.setupGeoFencing(waypoints);
+                    mViewModel.setIsGeofencing(true);
+                    Log.d("@@@@@@@@@@@@@@", "Geofencing is setup");
+                }
+            } else if (mViewModel.getCurrentRoute().getValue() != null) {
+                setupGF.removeGeoFences(Arrays.asList(mViewModel.getCurrentRoute().getValue()));
+                mViewModel.setIsGeofencing(false);
+            }
+        }
 }
