@@ -132,24 +132,27 @@ public class MapFragment extends Fragment implements LifecycleOwner {
                 currentLocation = startPoint;
                 mViewModel.setCurrentLocation(currentLocation.getPosition());
 
-                //removes old location of user
-                List<GeoPoint> tempList = new ArrayList<>();
-                if (mViewModel.getCurrentRoute().getValue() != null)
-                    tempList.add(mViewModel.getCurrentRoute().getValue()[0]);
-                setupGF.removeGeoFences(tempList);
+//                if(is following route from current location) {
+                
+                    //removes old location of user
+                    List<GeoPoint> tempList = new ArrayList<>();
+                    if (mViewModel.getCurrentRoute().getValue() != null)
+                        tempList.add(mViewModel.getCurrentRoute().getValue()[0]);
+                    setupGF.removeGeoFences(tempList);
 
-                //adds new location of user
-                tempList.clear();
-                tempList.add(currentLocation.getPosition());
-                setupGF.setupGeoFencing(tempList);
+                    //adds new location of user
+                    tempList.clear();
+                    tempList.add(currentLocation.getPosition());
+                    setupGF.setupGeoFencing(tempList);
 
-                if (mViewModel.getPointsVisited().getValue() != null) {
-                    //make sure to always add startpoint and currentLocation to pointsVisited
-                    GeoPoint[] pointsVisited = mViewModel.getPointsVisited().getValue();
+                    if (mViewModel.getPointsVisited().getValue() != null) {
+                        //make sure to always add startpoint and currentLocation to pointsVisited
+                        GeoPoint[] pointsVisited = mViewModel.getPointsVisited().getValue();
                         pointsVisited[pointsVisited.length - 1] = currentLocation.getPosition();
                         mViewModel.setPointsVisited(pointsVisited);
                         refreshMap();
-                }
+                    }
+//                }
 
                 mapView.getOverlays().add(startPoint);
             }

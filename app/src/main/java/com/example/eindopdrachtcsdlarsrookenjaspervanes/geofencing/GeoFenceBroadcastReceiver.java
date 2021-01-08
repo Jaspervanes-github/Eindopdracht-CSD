@@ -46,6 +46,9 @@ public class GeoFenceBroadcastReceiver extends BroadcastReceiver {
                 Toast.makeText(context, "GEOFENCE_TRANSITION_ENTER", Toast.LENGTH_LONG).show();
                 Log.d(TAG, "GEOFENCE_TRANSITION_ENTER");
 
+//                if(is following route from currentlocation){
+
+
 //                if(id != #0){
 //                    you have entered a waypoint, show toast
 //                }else if(id == last waypoint){
@@ -60,6 +63,9 @@ public class GeoFenceBroadcastReceiver extends BroadcastReceiver {
 //                    currentroute.remove(waypoint)
 
 //                refresh map???
+//                }
+
+
 //                }
                 break;
             }
