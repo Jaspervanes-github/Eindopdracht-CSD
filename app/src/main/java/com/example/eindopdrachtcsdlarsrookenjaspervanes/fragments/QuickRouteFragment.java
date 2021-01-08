@@ -1,5 +1,6 @@
 package com.example.eindopdrachtcsdlarsrookenjaspervanes.fragments;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -16,15 +17,19 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 import androidx.lifecycle.LifecycleOwner;
 
 import com.example.eindopdrachtcsdlarsrookenjaspervanes.Data;
 import com.example.eindopdrachtcsdlarsrookenjaspervanes.Method;
 import com.example.eindopdrachtcsdlarsrookenjaspervanes.R;
+import com.example.eindopdrachtcsdlarsrookenjaspervanes.viewModels.ViewModel;
 
 import org.osmdroid.config.Configuration;
 import org.osmdroid.util.GeoPoint;
@@ -56,6 +61,8 @@ public class QuickRouteFragment extends Fragment implements LifecycleOwner {
     private ArrayAdapter<Method> spinnerAdapter;
     private ArrayList<Method> methods;
 
+    private ViewModel mViewModel;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -63,6 +70,8 @@ public class QuickRouteFragment extends Fragment implements LifecycleOwner {
         Configuration.getInstance().load(fragmentContext, PreferenceManager.getDefaultSharedPreferences(fragmentContext));
         Data.getInstance().setCurrentFragment(this);
         View view = inflater.inflate(R.layout.quick_route_fragment, container, false);
+
+        mViewModel = new ViewModelProvider(requireActivity()).get(ViewModel.class);
 
         textViewInputCoordinates = view.findViewById(R.id.textViewInputCoordinates);
         textViewInputCoordinates.setText("Coordinate (Example: 51.100,4.678):");
@@ -108,17 +117,37 @@ public class QuickRouteFragment extends Fragment implements LifecycleOwner {
         buttonStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (listItems.size() >= 2) {
-                    boolean startFromMyLocation = checkBoxStartLocation.isChecked();
-                    if (startFromMyLocation) {
-//                        listItems.add(0,currenlocation);
-//
-//                        String method = spinnerMethod.getSelectedItem().toString().replaceAll("_", "-").toLowerCase();
-//                        Navigation.findNavController(getActivity(),R.id.fragmentContainer).navigate(R.id.action_quickRouteFragment_to_mapFragment);
+                boolean startFromMyLocation = checkBoxStartLocation.isChecked();
 
-                        //FIRST SWITCH TO MAPFRAGMENT THEN CALCULATE ROUTE
-//                        openRouteService.getRoute(listItems.toArray(),method,"en");
-//
+                if (startFromMyLocation) {
+                    if (listItems.size() >= 1) {
+                        listItems.add(0, mViewModel.getCurrentLocation().getValue());
+
+                        String method = spinnerMethod.getSelectedItem().toString().replaceAll("_", "-").toLowerCase();
+
+                        mViewModel.setCurrentRoute(listItems.toArray(new GeoPoint[listItems.size()]));
+                        mViewModel.setMethod(method);
+                        mViewModel.setIsFollowingRoute(true);
+
+                        Navigation.findNavController(mViewModel.getMainActivity().getValue(), R.id.fragmentContainer)
+                                .navigate(R.id.action_quickRouteFragment_to_mapFragment);
+                    }else{
+                        Toast.makeText(mViewModel.getMainActivity().getValue().getApplicationContext(),
+                                "You don't have enough points in your list!",Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    if (listItems.size() >= 2) {
+                        String method = spinnerMethod.getSelectedItem().toString().replaceAll("_", "-").toLowerCase();
+
+                        mViewModel.setCurrentRoute(listItems.toArray(new GeoPoint[listItems.size()]));
+                        mViewModel.setMethod(method);
+                        mViewModel.setIsFollowingRoute(true);
+
+                        Navigation.findNavController(mViewModel.getMainActivity().getValue(), R.id.fragmentContainer)
+                                .navigate(R.id.action_quickRouteFragment_to_mapFragment);
+                    }else{
+                        Toast.makeText(mViewModel.getMainActivity().getValue().getApplicationContext(),
+                                "You don't have enough points in your list!",Toast.LENGTH_SHORT).show();
                     }
                 }
             }
@@ -180,8 +209,8 @@ public class QuickRouteFragment extends Fragment implements LifecycleOwner {
 
                         GeoPoint geoPoint = new GeoPoint(lat, lng);
 
-                            listItems.add(geoPoint);
-                            listViewAdapter.notifyDataSetChanged();
+                        listItems.add(geoPoint);
+                        listViewAdapter.notifyDataSetChanged();
                     }
 
                 }

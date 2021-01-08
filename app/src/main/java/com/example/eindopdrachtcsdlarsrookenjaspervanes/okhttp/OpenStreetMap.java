@@ -14,10 +14,10 @@ import java.util.ArrayList;
 
 public class OpenStreetMap {
 
-    public void drawRoute(MapView mapView, ArrayList<GeoPoint> geoPoints) {
+    public void drawRoute(MapView mapView, ArrayList<GeoPoint> geoPoints, int color) {
         Polyline line = new Polyline();
         line.setPoints(geoPoints);
-        line.setColor(Color.RED);
+        line.setColor(color);
         mapView.getOverlayManager().add(line);
     }
 

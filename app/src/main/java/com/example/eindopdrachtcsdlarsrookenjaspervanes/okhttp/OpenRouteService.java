@@ -133,7 +133,7 @@ public class OpenRouteService {
         return geometry;
     }
 
-    public void getRoute(GeoPoint startPoint, GeoPoint endPoint, String method) {
+    public void getRoute(GeoPoint startPoint, GeoPoint endPoint, String method, int color) {
         ArrayList<GeoPoint> points = new ArrayList<>();
 
         if (this.isConnected) {
@@ -168,7 +168,7 @@ public class OpenRouteService {
                                     return;
                                 }
 
-                                openStreetMap.drawRoute(mapView, points);
+                                openStreetMap.drawRoute(mapView, points, color);
                                 openStreetMap.drawMarker(mapView, startPoint, context.getResources().getDrawable(R.drawable.waypoint_marker));
                                 openStreetMap.drawMarker(mapView, endPoint, context.getResources().getDrawable(R.drawable.waypoint_marker));
 
@@ -180,7 +180,7 @@ public class OpenRouteService {
         }
     }
 
-    public void getRoute(GeoPoint[] waypoints, String method, String language) {
+    public void getRoute(GeoPoint[] waypoints, String method, String language, int icon, int color) {
         if (this.isConnected) {
             ArrayList<GeoPoint> points = new ArrayList<>();
             double[][] coordinates = new double[waypoints.length][2];
@@ -220,9 +220,9 @@ public class OpenRouteService {
                                     if (view == null) {
                                         return;
                                     }
-                                    openStreetMap.drawMarker(mapView, point, context.getResources().getDrawable(R.drawable.waypoint_marker));
+                                    openStreetMap.drawMarker(mapView, point, context.getResources().getDrawable(icon));
                                 }
-                                openStreetMap.drawRoute(mapView, points);
+                                openStreetMap.drawRoute(mapView, points, color);
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
