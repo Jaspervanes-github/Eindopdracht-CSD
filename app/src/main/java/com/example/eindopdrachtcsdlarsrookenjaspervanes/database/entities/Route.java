@@ -10,8 +10,6 @@ import java.util.List;
 
 @Entity(tableName = "Route")
 public class Route {
-    public Route() {
-    }
 
     @PrimaryKey
     public int uid;
