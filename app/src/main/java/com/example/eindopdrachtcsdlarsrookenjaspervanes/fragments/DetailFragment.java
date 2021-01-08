@@ -17,6 +17,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.eindopdrachtcsdlarsrookenjaspervanes.Data;
 import com.example.eindopdrachtcsdlarsrookenjaspervanes.R;
+import com.example.eindopdrachtcsdlarsrookenjaspervanes.database.entities.Route;
 import com.example.eindopdrachtcsdlarsrookenjaspervanes.models.EndPoint;
 import com.example.eindopdrachtcsdlarsrookenjaspervanes.viewModels.DetailFragmentViewModel;
 import com.example.eindopdrachtcsdlarsrookenjaspervanes.viewModels.MapViewModel;
@@ -38,18 +39,21 @@ public class DetailFragment extends Fragment implements LifecycleOwner {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.detail_fragment, container, false);
         Data.getInstance().setCurrentFragment(this);
-        mViewModel = new ViewModelProvider(getActivity()).get(ViewModel.class);
+        mViewModel = new ViewModelProvider(requireActivity()).get(ViewModel.class);
 
         TextView textView_name = view.findViewById(R.id.detailFragment_textView_name_value);
         TextView textView_endpoint = view.findViewById(R.id.detailFragment_textView_endpoint_value);
         ListView listView_pointInBetween = view.findViewById(R.id.detailFragment_listView_pointsInBetween);
 
-        EndPoint selectedPoint = mViewModel.getSelectedEndPoint().getValue();
+        Route selectedPoint = mViewModel.getSelectedEndPoint().getValue();
+        System.out.println(selectedPoint.name);
+        System.out.println(selectedPoint.uid);
         textView_name.setText(selectedPoint.getName());
-        textView_endpoint.setText("Latitude : " + selectedPoint.getEndPoint().getLatitude() + ", " + "Longitude: " + selectedPoint.getEndPoint().getLongitude());
-
+        if(selectedPoint.getWaypoints().size() > 0){
+            textView_endpoint.setText("Latitude : " + selectedPoint.getWaypoints().get(selectedPoint.getWaypoints().size()-1).getLatitude() + ", " + "Longitude: " +  selectedPoint.getWaypoints().get(selectedPoint.getWaypoints().size()-1).getLongitude());
+        }
         ArrayAdapter<GeoPoint> arrayAdapter = new ArrayAdapter<GeoPoint>(this.getContext(), android.R.layout.simple_list_item_1);
-        arrayAdapter.addAll(selectedPoint.getPointInBetween());
+        arrayAdapter.addAll(selectedPoint.getWaypoints());
         listView_pointInBetween.setAdapter(arrayAdapter);
         arrayAdapter.notifyDataSetChanged();
 
