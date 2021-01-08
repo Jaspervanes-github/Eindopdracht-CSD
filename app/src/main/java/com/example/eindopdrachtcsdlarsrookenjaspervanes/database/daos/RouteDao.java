@@ -18,7 +18,10 @@ public interface RouteDao {
     Route getAll();
 
     @Query("SELECT * FROM Route WHERE uid IN (:routeIds)")
-    List<GeoPoint> loadAllByIds(int[] routeIds);
+    Route loadAllByIds(int[] routeIds);
+
+    @Query("SELECT waypoints FROM Route WHERE uid IN (:routeId)")
+    List<GeoPoint> loadRouteFromId(int routeId);
 
     @Query("SELECT * FROM Route WHERE uid LIKE :uid")
     Route findByID(String uid);
@@ -30,7 +33,7 @@ public interface RouteDao {
     void delete(Route route);
 
     @Query("UPDATE Route SET waypoints = :route WHERE uid = :uid")
-    void updateRoute(int uid, Route route);
+    void updateRoute(int uid, List<GeoPoint> route);
 
     @Query("UPDATE Route SET from_location = :isFromLocation WHERE uid = :uid")
     void updateRoute(int uid, boolean isFromLocation);
