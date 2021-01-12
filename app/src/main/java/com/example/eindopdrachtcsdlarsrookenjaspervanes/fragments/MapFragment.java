@@ -171,7 +171,8 @@ public class MapFragment extends Fragment implements LifecycleOwner {
     }
 
     public void refreshMap() {
-        if (mViewModel.getActiveRoute() != null && mViewModel.getActiveRoute().isActive == 1) {
+        Log.d("IN REFRESMAP", "before ints refreshMap: ");
+        if (mViewModel.getActiveRoute() != null && mViewModel.getActiveRoute().isActive) {
             openRouteService.getRoute(mViewModel.getActiveRoute().getWaypoints().toArray(
                     new GeoPoint[mViewModel.getActiveRoute().getWaypoints().size()]),
                     mViewModel.getActiveRoute().getMethod(),

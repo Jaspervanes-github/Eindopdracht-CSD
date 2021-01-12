@@ -2,6 +2,7 @@ package com.example.eindopdrachtcsdlarsrookenjaspervanes.viewModels;
 
 import android.app.Activity;
 import android.app.Application;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -110,6 +111,7 @@ public class ViewModel extends AndroidViewModel {
     }
 
     public Route getActiveRoute() {
+        Log.d("BEFORE RETURN ROUTE", "in method getActiveRoute() in ViewModel");
         return this.routeDao.getActiveRoute();
     }
 }

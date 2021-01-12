@@ -30,10 +30,10 @@ public interface RouteDao {
     Route getActiveRoute();
 
     @Query("UPDATE Route set isActive = 1 WHERE uid = :routeID")
-    Route setActiveRoute(int routeID);
+    void setActiveRoute(int routeID);
 
     @Query("UPDATE Route set isActive = 0 WHERE uid = :routeID")
-    Route unActiveRoute(int routeID);
+    void unActiveRoute(int routeID);
 
 
     @Insert

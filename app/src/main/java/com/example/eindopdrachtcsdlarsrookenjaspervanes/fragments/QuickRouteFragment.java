@@ -128,7 +128,7 @@ public class QuickRouteFragment extends Fragment implements LifecycleOwner {
 
                         Route route = new Route("###", listItems, method, true);
                         mViewModel.addRoute(route);
-                        mViewModel.setActiveRoute(route);
+                        mViewModel.setActiveRoute(route.getUid());
 
                         Navigation.findNavController(mViewModel.getMainActivity().getValue(), R.id.fragmentContainer)
                                 .navigate(R.id.action_quickRouteFragment_to_mapFragment);
@@ -142,7 +142,7 @@ public class QuickRouteFragment extends Fragment implements LifecycleOwner {
 
                         Route route = new Route("###", listItems, method, false);
                         mViewModel.addRoute(route);
-                        mViewModel.setActiveRoute(route);
+                        mViewModel.setActiveRoute(route.getUid());
 
                         Navigation.findNavController(mViewModel.getMainActivity().getValue(), R.id.fragmentContainer)
                                 .navigate(R.id.action_quickRouteFragment_to_mapFragment);

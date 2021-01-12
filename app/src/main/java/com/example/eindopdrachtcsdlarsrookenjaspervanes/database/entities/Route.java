@@ -16,7 +16,7 @@ public class Route {
         this.waypoints = waypoints;
         this.method = method;
         this.isFromLocation = isFromLocation;
-        this.isActive = 0;
+        this.isActive = false;
     }
 
     @PrimaryKey (autoGenerate = true)
@@ -32,7 +32,7 @@ public class Route {
     public boolean isFromLocation;
 
     @ColumnInfo(name = "isActive")
-    public int isActive;
+    public boolean isActive;
 
     @ColumnInfo(name = "method")
     public String method;
@@ -69,11 +69,11 @@ public class Route {
         isFromLocation = fromLocation;
     }
 
-    public int isActive() {
+    public boolean isActive() {
         return isActive;
     }
 
-    public void setActive(int active) {
+    public void setActive(boolean active) {
         isActive = active;
     }
 
