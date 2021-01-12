@@ -1,22 +1,29 @@
 package com.example.eindopdrachtcsdlarsrookenjaspervanes.viewModels;
 
 import android.app.Activity;
+import android.app.Application;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.example.eindopdrachtcsdlarsrookenjaspervanes.database.Database;
+import com.example.eindopdrachtcsdlarsrookenjaspervanes.database.daos.RouteDao;
+import com.example.eindopdrachtcsdlarsrookenjaspervanes.database.entities.Route;
 import com.example.eindopdrachtcsdlarsrookenjaspervanes.models.EndPoint;
 
 import org.osmdroid.util.GeoPoint;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.List;
 
-public class ViewModel extends androidx.lifecycle.ViewModel {
+public class ViewModel extends AndroidViewModel {
 
     private MutableLiveData<ArrayList<EndPoint>> allEndPoints;
-    private MutableLiveData<EndPoint> selectedEndPoint;
+    private MutableLiveData<Route> selectedEndPoint;
 
     private MutableLiveData<GeoPoint[]> currentRoute;
     private MutableLiveData<GeoPoint[]> pointsVisited;
@@ -28,7 +35,11 @@ public class ViewModel extends androidx.lifecycle.ViewModel {
     private MutableLiveData<Activity> mainActivity;
 
 
-    public ViewModel() {
+    private RouteDao routeDao;
+
+    public ViewModel(@NonNull Application application) {
+        super(application);
+
         this.allEndPoints = new MutableLiveData<>();
         this.allEndPoints.setValue(new ArrayList<>());
         this.selectedEndPoint = new MutableLiveData<>();
@@ -41,6 +52,9 @@ public class ViewModel extends androidx.lifecycle.ViewModel {
         this.currentLocation = new MutableLiveData<>();
 
         this.mainActivity = new MutableLiveData<>();
+
+        Database db = Database.getInstance(application);
+        routeDao = db.routeDao();
     }
 
     public LiveData<ArrayList<EndPoint>> getAllEndPoints() {
@@ -51,12 +65,12 @@ public class ViewModel extends androidx.lifecycle.ViewModel {
         this.allEndPoints.setValue(allEndPoints);
     }
 
-    public LiveData<EndPoint> getSelectedEndPoint() {
+    public LiveData<Route> getSelectedEndPoint() {
         return selectedEndPoint;
     }
 
-    public void setSelectedEndPoint(EndPoint selectedEndPoint) {
-        this.selectedEndPoint.setValue(selectedEndPoint);
+    public void setSelectedEndPoint(Route selectedRoute) {
+        this.selectedEndPoint.setValue(selectedRoute);
     }
 
     public LiveData<GeoPoint[]> getCurrentRoute() {
@@ -113,5 +127,29 @@ public class ViewModel extends androidx.lifecycle.ViewModel {
 
     public void setIsGeofencing(boolean isGeofencing) {
         this.isGeofencing.setValue(isGeofencing);
+    }
+
+
+    public List<Route> getAllSavedRoutes(){
+        return this.routeDao.getAll();
+    }
+
+    public void addRoute(Route route){
+        this.routeDao.insertRoute(route);
+    }
+
+    public void deleteRoute(Route route){
+        this.routeDao.delete(route);
+    }
+
+    public void setActiveRoute(Route route){
+        route.isActive = 1;
+    }
+    public void unActiveRoute(Route route){
+        route.isActive = 0;
+    }
+
+    public Route getActiveRoute(){
+       return this.routeDao.getActiveRoute();
     }
 }

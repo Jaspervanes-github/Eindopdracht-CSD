@@ -8,17 +8,17 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.eindopdrachtcsdlarsrookenjaspervanes.R;
-import com.example.eindopdrachtcsdlarsrookenjaspervanes.models.EndPoint;
+import com.example.eindopdrachtcsdlarsrookenjaspervanes.database.entities.Route;
 
 import java.util.*;
 
 public class Adapter extends RecyclerView.Adapter<Holder> {
 
-    private List<EndPoint> endPoints;
+    private List<Route> routes;
     private OnItemClickListener clickListener;
 
-    public Adapter(List<EndPoint> endPoints, OnItemClickListener listener) {
-        this.endPoints = endPoints;
+    public Adapter(List<Route> endPoints, OnItemClickListener listener) {
+        this.routes = endPoints;
         this.clickListener = listener;
     }
 
@@ -33,12 +33,19 @@ public class Adapter extends RecyclerView.Adapter<Holder> {
 
     @Override
     public void onBindViewHolder(@NonNull Holder holder, int position) {
-        EndPoint pointSelected = this.endPoints.get(position);
+        Route pointSelected = this.routes.get(position);
         holder.title.setText(pointSelected.getName());
+        System.out.println(holder.title.getText());
     }
 
     @Override
     public int getItemCount() {
-        return endPoints.size();
+        return routes.size();
+    }
+
+
+    public void listChanged(List<Route> allRoutes){
+        this.routes = allRoutes;
+        notifyDataSetChanged();
     }
 }

@@ -6,6 +6,30 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/textView_name"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.21"
+        app:layout_constraintStart_toEndOf="@+id/editFragment_imageButtonMoveDown"
+        app:layout_constraintTop_toBottomOf="@+id/editFragment_textViewMethod"
+        app:layout_constraintVertical_bias="0.342" />
+
+    <EditText
+        android:id="@+id/editfragment_editText_nameInput"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/listview_border"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.493"
+        app:layout_constraintStart_toEndOf="@+id/textView"
+        app:layout_constraintTop_toBottomOf="@+id/editFragment_checkBoxStartLocation"
+        app:layout_constraintVertical_bias="0.149" />
+
     <EditText
         android:id="@+id/editFragment_editTextInputCoordinates"
         android:layout_width="wrap_content"
@@ -24,7 +48,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="24dp"
-        android:text="TextView"
+        android:text="@string/textView_InputCoordinates"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/editFragment_editTextInputCoordinates"
         app:layout_constraintHorizontal_bias="0.941"
@@ -47,21 +71,20 @@
         android:id="@+id/editFragment_buttonSave"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="179dp"
-        android:text="Save"
+        android:text="@string/save_button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.975"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editFragment_editTextInputCoordinates"
-        app:layout_constraintVertical_bias="0.02" />
+        app:layout_constraintHorizontal_bias="0.827"
+        app:layout_constraintStart_toEndOf="@+id/editFragment_buttonRemovePoint"
+        app:layout_constraintTop_toBottomOf="@+id/editfragment_editText_nameInput"
+        app:layout_constraintVertical_bias="0.298" />
 
     <TextView
         android:id="@+id/editFragment_textViewMethod"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="34dp"
-        android:text="TextView"
+        android:text="@string/textView_Method"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -113,21 +136,20 @@
         android:id="@+id/editFragment_buttonRemovePoint"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="179dp"
-        android:text="Remove"
+        android:text="@string/remove_button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.515"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editFragment_editTextInputCoordinates"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintHorizontal_bias="0.037"
+        app:layout_constraintStart_toEndOf="@+id/editFragment_listViewPoints"
+        app:layout_constraintTop_toBottomOf="@+id/editFragment_imageButtonMoveDown"
+        app:layout_constraintVertical_bias="0.109" />
 
     <CheckBox
         android:id="@+id/editFragment_checkBoxStartLocation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="19dp"
-        android:text="Start from my location"
+        android:text="@string/textView_checkBox"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.971"

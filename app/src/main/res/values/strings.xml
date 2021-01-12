@@ -2,11 +2,21 @@
     <string name="app_name">Eindopdracht CSD Lars Rook en Jasper van Es</string>
     <string name="addButtonRecyclerView">Add new endPoint</string>
 
+<!-- buttons -->
+    <string name="start_button">start</string>
+    <string name="save_button">save</string>
+    <string name="remove_button">remove</string>
 
 <!--  this is for the bottom navigation bar  -->
     <string name="quickRoute">Quick route</string>
     <string name="map">Map</string>
     <string name="destinations">Destinations</string>
+
+    <string name="textView_InputCoordinates">Coordinate (Example: 51.100,4.678):</string>
+    <string name="textView_Method">Method:</string>
+    <string name="textView_checkBox">Start from my location</string>\
+
+
 
     <string name="textView_name">Name: </string>
     <string name="textView_endpoint">Endpoint: </string>
