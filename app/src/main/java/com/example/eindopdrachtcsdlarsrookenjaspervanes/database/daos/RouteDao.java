@@ -29,6 +29,13 @@ public interface RouteDao {
     @Query("SELECT * FROM Route WHERE isActive = 1 LIMIT 1")
     Route getActiveRoute();
 
+    @Query("UPDATE Route set isActive = 1 WHERE uid = :routeID")
+    Route setActiveRoute(int routeID);
+
+    @Query("UPDATE Route set isActive = 0 WHERE uid = :routeID")
+    Route unActiveRoute(int routeID);
+
+
     @Insert
     void insertRoute(Route... routes);
 
