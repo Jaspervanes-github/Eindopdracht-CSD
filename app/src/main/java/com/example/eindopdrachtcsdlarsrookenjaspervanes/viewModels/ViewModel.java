@@ -95,7 +95,8 @@ public class ViewModel extends AndroidViewModel {
     }
 
     public void addRoute(Route route) {
-        this.routeDao.insertRoute(route);
+        long id = this.routeDao.insertRoute(route);
+        route.setUid((int)id);
     }
 
     public void deleteRoute(Route route) {
@@ -103,6 +104,8 @@ public class ViewModel extends AndroidViewModel {
     }
 
     public void setActiveRoute(int routeID) {
+        if(this.routeDao.getActiveRoute() != null)
+        this.routeDao.delete(this.routeDao.getActiveRoute());
         this.routeDao.setActiveRoute(routeID);
     }
 

@@ -3,6 +3,7 @@ package com.example.eindopdrachtcsdlarsrookenjaspervanes.database.daos;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
+import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Update;
 
@@ -36,8 +37,8 @@ public interface RouteDao {
     void unActiveRoute(int routeID);
 
 
-    @Insert
-    void insertRoute(Route... routes);
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    long insertRoute(Route routes);
 
     @Delete
     void delete(Route route);
