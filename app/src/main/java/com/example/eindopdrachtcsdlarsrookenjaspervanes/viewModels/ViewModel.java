@@ -89,26 +89,27 @@ public class ViewModel extends AndroidViewModel {
     }
 
 
-    public List<Route> getAllSavedRoutes(){
+    public List<Route> getAllSavedRoutes() {
         return this.routeDao.getAll();
     }
 
-    public void addRoute(Route route){
+    public void addRoute(Route route) {
         this.routeDao.insertRoute(route);
     }
 
-    public void deleteRoute(Route route){
+    public void deleteRoute(Route route) {
         this.routeDao.delete(route);
     }
 
-    public void setActiveRoute(Route route){
-        route.isActive = 1;
-    }
-    public void unActiveRoute(Route route){
-        route.isActive = 0;
+    public void setActiveRoute(int routeID) {
+        this.routeDao.setActiveRoute(routeID);
     }
 
-    public Route getActiveRoute(){
-       return this.routeDao.getActiveRoute();
+    public void unActiveRoute(int routeID) {
+        this.routeDao.unActiveRoute(routeID);
+    }
+
+    public Route getActiveRoute() {
+        return this.routeDao.getActiveRoute();
     }
 }
