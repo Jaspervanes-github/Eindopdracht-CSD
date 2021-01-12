@@ -44,7 +44,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         BottomNavigationView navView = findViewById(R.id.bottomNavigationView);
         navView.setOnNavigationItemSelectedListener(navListener);
-
+        navView.setSelectedItemId(R.id.navigation_Map);
+        
         ViewModel viewModel = new ViewModelProvider(this).get(ViewModel.class);
 
         viewModel.setMainActivity(this);

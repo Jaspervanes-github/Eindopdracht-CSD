@@ -108,9 +108,9 @@ public class MapFragment extends Fragment implements LifecycleOwner {
                 if (currentLocation != null) {
                     isCenterMode = !isCenterMode;
                     if (isCenterMode)
-                        Toast.makeText(fragmentContext, "You are now in center-mode", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(fragmentContext, R.string.toast_isCenterModeTrue, Toast.LENGTH_SHORT).show();
                     if (!isCenterMode)
-                        Toast.makeText(fragmentContext, "You are no longer in center-mode", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(fragmentContext, R.string.toast_isCenterModeFalse, Toast.LENGTH_SHORT).show();
 //                    mapController.setCenter(mViewModel.getCurrentLocation().getValue());
                 }
             }

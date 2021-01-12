@@ -3,17 +3,17 @@
 
     <item
         android:id="@+id/navigation_quickRoute"
-        android:title="@string/quickRoute"
-        />
+        android:icon="@drawable/navicon_quickroute"
+        android:title="@string/quickRoute" />
 
     <item
         android:id="@+id/navigation_Map"
-        android:title="@string/map"
-        />
+        android:icon="@drawable/navicon_map"
+        android:title="@string/map" />
 
     <item
         android:id="@+id/navigation_Destinations"
-        android:title="@string/destinations"
-        />
+        android:icon="@drawable/navicon_endpoints"
+        android:title="@string/destinations" />
 
 </menu>

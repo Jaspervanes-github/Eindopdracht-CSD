@@ -22,4 +22,7 @@
     <string name="textView_endpoint">Endpoint: </string>
     <string name="textView_pointInBetween">Points in between: </string>
     <string name="button_start">Start</string>
+    <string name="toast_isCenterModeTrue">You are now in center-mode</string>
+    <string name="toast_isCenterModeFalse">You are no longer in center-mode</string>
+    <string name="quickRoute_error">You don\'t have enough points in your list!</string>
 </resources>
