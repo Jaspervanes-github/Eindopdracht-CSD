@@ -68,7 +68,6 @@ public class QuickRouteFragment extends Fragment implements LifecycleOwner {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         fragmentContext = getActivity().getBaseContext();
-        Configuration.getInstance().load(fragmentContext, PreferenceManager.getDefaultSharedPreferences(fragmentContext));
         Data.getInstance().setCurrentFragment(this);
         View view = inflater.inflate(R.layout.quick_route_fragment, container, false);
 
