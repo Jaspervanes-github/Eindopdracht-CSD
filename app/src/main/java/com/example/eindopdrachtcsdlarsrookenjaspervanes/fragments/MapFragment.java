@@ -105,12 +105,12 @@ public class MapFragment extends Fragment implements LifecycleOwner {
         ibCenterMap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(currentLocation != null) {
+                if (currentLocation != null) {
                     isCenterMode = !isCenterMode;
-                    if(isCenterMode)
-                    Toast.makeText(fragmentContext,"You are now in center-mode", Toast.LENGTH_SHORT).show();
-                    if(!isCenterMode)
-                        Toast.makeText(fragmentContext,"You are no longer in center-mode", Toast.LENGTH_SHORT).show();
+                    if (isCenterMode)
+                        Toast.makeText(fragmentContext, "You are now in center-mode", Toast.LENGTH_SHORT).show();
+                    if (!isCenterMode)
+                        Toast.makeText(fragmentContext, "You are no longer in center-mode", Toast.LENGTH_SHORT).show();
 //                    mapController.setCenter(mViewModel.getCurrentLocation().getValue());
                 }
             }
@@ -124,12 +124,6 @@ public class MapFragment extends Fragment implements LifecycleOwner {
         super.onViewCreated(view, savedInstanceState);
 
         getLocation();
-
-//        openRouteService.getRoute(new GeoPoint[]{
-//                new GeoPoint(51.813297, 4.690093),
-//                new GeoPoint(49.41943, 8.686507),
-//                new GeoPoint(49.420318, 8.687872)
-//        }, "driving-car", "de");
     }
 
     public void getLocation() {
@@ -144,8 +138,8 @@ public class MapFragment extends Fragment implements LifecycleOwner {
 
                 Log.d("Latitude", "onLocationChanged: " + location.getLatitude());
                 GeoPoint point = new GeoPoint(location.getLatitude(), location.getLongitude());
-                if(isCenterMode)
-                mapController.setCenter(point);
+                if (isCenterMode)
+                    mapController.setCenter(point);
                 Marker startPoint = new Marker(mapView);
                 startPoint.setPosition(point);
                 startPoint.setIcon(getResources().getDrawable(R.drawable.my_location));
@@ -154,54 +148,42 @@ public class MapFragment extends Fragment implements LifecycleOwner {
                 currentLocation = startPoint;
                 mViewModel.setCurrentLocation(currentLocation.getPosition());
 
-//                if(is following route from current location) {
+                //removes old location of user
+                List<GeoPoint> tempList = new ArrayList<>();
+                if (mViewModel.getCurrentRoute().getValue() != null)
+                    tempList.add(mViewModel.getCurrentRoute().getValue()[0]);
+                setupGF.removeGeoFences(tempList);
 
-                    //removes old location of user
-                    List<GeoPoint> tempList = new ArrayList<>();
-                    if (mViewModel.getCurrentRoute().getValue() != null)
-                        tempList.add(mViewModel.getCurrentRoute().getValue()[0]);
-                    setupGF.removeGeoFences(tempList);
+                //adds new location of user
+                tempList.clear();
+                tempList.add(currentLocation.getPosition());
+                setupGF.setupGeoFencing(tempList);
 
-                    //adds new location of user
-                    tempList.clear();
-                    tempList.add(currentLocation.getPosition());
-                    setupGF.setupGeoFencing(tempList);
-
-                    if (mViewModel.getPointsVisited().getValue() != null) {
-                        //make sure to always add startpoint and currentLocation to pointsVisited
-                        GeoPoint[] pointsVisited = mViewModel.getPointsVisited().getValue();
-                        pointsVisited[pointsVisited.length - 1] = currentLocation.getPosition();
-                        mViewModel.setPointsVisited(pointsVisited);
-                        refreshMap();
-                    }
-//                }
+                refreshMap();
 
                 mapView.getOverlays().add(startPoint);
             }
         };
 
         if (ContextCompat.checkSelfPermission(fragmentContext, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 100, locationListener);
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 50, locationListener);
         }
     }
 
-        public void refreshMap(){
-            if (mViewModel.getIsFollowingRoute().getValue()) {
-                if (mViewModel.getPointsVisited().getValue() != null) {
-                    openRouteService.getRoute(mViewModel.getPointsVisited().getValue(), mViewModel.getMethod().getValue(),
-                            "en", R.drawable.waypoint_marker, Color.YELLOW);
-                }
-                openRouteService.getRoute(mViewModel.getCurrentRoute().getValue(), mViewModel.getMethod().getValue(),
-                        "en", R.drawable.waypoint_marker, Color.RED);
-                if (!mViewModel.getIsGeofencing().getValue()) {
-                    List<GeoPoint> waypoints = Arrays.asList(mViewModel.getCurrentRoute().getValue());
-                    setupGF.setupGeoFencing(waypoints);
-                    mViewModel.setIsGeofencing(true);
-                    Log.d("@@@@@@@@@@@@@@", "Geofencing is setup");
-                }
+    public void refreshMap() {
+        if(mViewModel.getCurrentRoute().getValue() != null && mViewModel.isActive.getValue()) {
+            openRouteService.getRoute(mViewModel.getCurrentRoute().getValue(), mViewModel.getMethod().getValue(),
+                    "en", R.drawable.waypoint_marker, Color.RED);
+
+            if (!mViewModel.getIsGeofencing().getValue()) {
+                List<GeoPoint> waypoints = Arrays.asList(mViewModel.getCurrentRoute().getValue());
+                setupGF.setupGeoFencing(waypoints);
+                mViewModel.setIsGeofencing(true);
+                Log.d("@@@@@@@@@@@@@@", "Geofencing is setup");
             } else if (mViewModel.getCurrentRoute().getValue() != null) {
                 setupGF.removeGeoFences(Arrays.asList(mViewModel.getCurrentRoute().getValue()));
                 mViewModel.setIsGeofencing(false);
             }
         }
+    }
 }

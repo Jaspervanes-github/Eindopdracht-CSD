@@ -26,14 +26,12 @@ public class ViewModel extends AndroidViewModel {
     private MutableLiveData<Route> selectedEndPoint;
 
     private MutableLiveData<GeoPoint[]> currentRoute;
-    private MutableLiveData<GeoPoint[]> pointsVisited;
     private MutableLiveData<String> method;
     private MutableLiveData<Boolean> isFollowingRoute;
     private MutableLiveData<Boolean> isGeofencing;
     private MutableLiveData<GeoPoint> currentLocation;
 
     private MutableLiveData<Activity> mainActivity;
-
 
     private RouteDao routeDao;
 
@@ -45,7 +43,6 @@ public class ViewModel extends AndroidViewModel {
         this.selectedEndPoint = new MutableLiveData<>();
 
         this.currentRoute = new MutableLiveData<>();
-        this.pointsVisited = new MutableLiveData<>();
         this.method = new MutableLiveData<>();
         this.isFollowingRoute = new MutableLiveData<>(false);
         this.isGeofencing = new MutableLiveData<>(false);
@@ -79,14 +76,6 @@ public class ViewModel extends AndroidViewModel {
 
     public void setCurrentRoute(GeoPoint[] currentRoute) {
         this.currentRoute.setValue(currentRoute);
-    }
-
-    public LiveData<GeoPoint[]> getPointsVisited() {
-        return pointsVisited;
-    }
-
-    public void setPointsVisited(GeoPoint[] pointsVisited) {
-        this.pointsVisited.setValue(pointsVisited);
     }
 
     public LiveData<String> getMethod() {
