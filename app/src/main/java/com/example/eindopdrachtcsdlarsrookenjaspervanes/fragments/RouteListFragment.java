@@ -62,15 +62,18 @@ public class RouteListFragment extends Fragment implements OnItemClickListener, 
         addNewButtonTest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                List<GeoPoint> test = new ArrayList<>();
-                mViewModel.addRoute(new Route("slik", test, true));
-                mViewModel.addRoute(new Route("een", test, false));
-                mViewModel.addRoute(new Route("pik", test, true));
-                adapter.listChanged(mViewModel.getAllSavedRoutes());
-                for(Route r : mViewModel.getAllSavedRoutes()){
-                    System.out.println(r.name);
-                }
-                System.out.println(mViewModel.getAllSavedRoutes().size());
+//                List<GeoPoint> test = new ArrayList<>();
+//                mViewModel.addRoute(new Route("slik", test, true));
+//                mViewModel.addRoute(new Route("een", test, false));
+//                mViewModel.addRoute(new Route("pik", test, true));
+//                adapter.listChanged(mViewModel.getAllSavedRoutes());
+//                for(Route r : mViewModel.getAllSavedRoutes()){
+//                    System.out.println(r.name);
+//                }
+//                System.out.println(mViewModel.getAllSavedRoutes().size());
+//
+                Navigation.findNavController(getActivity(), R.id.fragmentContainer).navigate(R.id.action_routeListFragment_to_editFragment);
+
             }
         });
 

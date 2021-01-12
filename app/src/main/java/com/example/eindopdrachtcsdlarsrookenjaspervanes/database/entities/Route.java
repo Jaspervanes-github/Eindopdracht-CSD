@@ -15,6 +15,7 @@ public class Route {
         this.name = name;
         this.waypoints = waypoints;
         this.isFromLocation = isFromLocation;
+        this.isActive = 0;
     }
 
     @PrimaryKey (autoGenerate = true)
@@ -28,6 +29,9 @@ public class Route {
 
     @ColumnInfo(name = "from_location")
     public boolean isFromLocation;
+
+    @ColumnInfo(name = "isActive")
+    public int isActive;
 
     public int getUid() {
         return uid;
@@ -59,5 +63,13 @@ public class Route {
 
     public void setFromLocation(boolean fromLocation) {
         isFromLocation = fromLocation;
+    }
+
+    public int isActive() {
+        return isActive;
+    }
+
+    public void setActive(int active) {
+        isActive = active;
     }
 }

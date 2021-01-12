@@ -130,10 +130,6 @@ public class ViewModel extends AndroidViewModel {
     }
 
 
-    public Route getActiveRoute(){
-        return null;
-    }
-
     public List<Route> getAllSavedRoutes(){
         return this.routeDao.getAll();
     }
@@ -146,4 +142,14 @@ public class ViewModel extends AndroidViewModel {
         this.routeDao.delete(route);
     }
 
+    public void setActiveRoute(Route route){
+        route.isActive = 1;
+    }
+    public void unActiveRoute(Route route){
+        route.isActive = 0;
+    }
+
+    public Route getActiveRoute(){
+       return this.routeDao.getActiveRoute();
+    }
 }

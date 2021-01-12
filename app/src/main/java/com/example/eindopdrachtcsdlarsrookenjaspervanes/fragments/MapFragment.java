@@ -172,8 +172,9 @@ public class MapFragment extends Fragment implements LifecycleOwner {
                         GeoPoint[] pointsVisited = mViewModel.getPointsVisited().getValue();
                         pointsVisited[pointsVisited.length - 1] = currentLocation.getPosition();
                         mViewModel.setPointsVisited(pointsVisited);
-                        refreshMap();
+
                     }
+                     refreshMap();
 //                }
 
                 mapView.getOverlays().add(startPoint);

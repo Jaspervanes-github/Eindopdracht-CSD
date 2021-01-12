@@ -26,6 +26,8 @@ public interface RouteDao {
     @Query("SELECT * FROM Route WHERE uid = :uid")
     Route findRouteByID(int uid);
 
+    @Query("SELECT * FROM Route WHERE isActive = 1 LIMIT 1")
+    Route getActiveRoute();
 
     @Insert
     void insertRoute(Route... routes);
