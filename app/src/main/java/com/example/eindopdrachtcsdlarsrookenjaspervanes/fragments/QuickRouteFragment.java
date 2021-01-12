@@ -29,6 +29,7 @@ import androidx.lifecycle.LifecycleOwner;
 import com.example.eindopdrachtcsdlarsrookenjaspervanes.Data;
 import com.example.eindopdrachtcsdlarsrookenjaspervanes.Method;
 import com.example.eindopdrachtcsdlarsrookenjaspervanes.R;
+import com.example.eindopdrachtcsdlarsrookenjaspervanes.database.entities.Route;
 import com.example.eindopdrachtcsdlarsrookenjaspervanes.viewModels.ViewModel;
 
 import org.osmdroid.config.Configuration;
@@ -125,9 +126,9 @@ public class QuickRouteFragment extends Fragment implements LifecycleOwner {
 
                         String method = spinnerMethod.getSelectedItem().toString().replaceAll("_", "-").toLowerCase();
 
-                        mViewModel.setCurrentRoute(listItems.toArray(new GeoPoint[listItems.size()]));
-                        mViewModel.setMethod(method);
-                        mViewModel.setIsFollowingRoute(true);
+                        Route route = new Route("###", listItems, method, true);
+                        mViewModel.addRoute(route);
+                        mViewModel.setActiveRoute(route);
 
                         Navigation.findNavController(mViewModel.getMainActivity().getValue(), R.id.fragmentContainer)
                                 .navigate(R.id.action_quickRouteFragment_to_mapFragment);
@@ -139,9 +140,9 @@ public class QuickRouteFragment extends Fragment implements LifecycleOwner {
                     if (listItems.size() >= 2) {
                         String method = spinnerMethod.getSelectedItem().toString().replaceAll("_", "-").toLowerCase();
 
-                        mViewModel.setCurrentRoute(listItems.toArray(new GeoPoint[listItems.size()]));
-                        mViewModel.setMethod(method);
-                        mViewModel.setIsFollowingRoute(true);
+                        Route route = new Route("###", listItems, method, false);
+                        mViewModel.addRoute(route);
+                        mViewModel.setActiveRoute(route);
 
                         Navigation.findNavController(mViewModel.getMainActivity().getValue(), R.id.fragmentContainer)
                                 .navigate(R.id.action_quickRouteFragment_to_mapFragment);

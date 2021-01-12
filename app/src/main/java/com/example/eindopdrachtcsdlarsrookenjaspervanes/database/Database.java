@@ -10,7 +10,7 @@ import com.example.eindopdrachtcsdlarsrookenjaspervanes.database.daos.RouteDao;
 import com.example.eindopdrachtcsdlarsrookenjaspervanes.database.entities.Route;
 
 @TypeConverters(RoomConverter.class)
-@androidx.room.Database(entities = {Route.class}, version = 3, exportSchema = false)
+@androidx.room.Database(entities = {Route.class}, version = 4, exportSchema = false)
 public abstract class Database extends RoomDatabase {
     public abstract RouteDao routeDao();
 

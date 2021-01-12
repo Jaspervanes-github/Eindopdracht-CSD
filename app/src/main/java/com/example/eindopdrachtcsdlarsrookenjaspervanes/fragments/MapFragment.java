@@ -150,8 +150,8 @@ public class MapFragment extends Fragment implements LifecycleOwner {
 
                 //removes old location of user
                 List<GeoPoint> tempList = new ArrayList<>();
-                if (mViewModel.getCurrentRoute().getValue() != null)
-                    tempList.add(mViewModel.getCurrentRoute().getValue()[0]);
+                if (mViewModel.getActiveRoute() != null)
+                    tempList.add(mViewModel.getActiveRoute().getWaypoints().get(0));
                 setupGF.removeGeoFences(tempList);
 
                 //adds new location of user
@@ -171,17 +171,19 @@ public class MapFragment extends Fragment implements LifecycleOwner {
     }
 
     public void refreshMap() {
-        if(mViewModel.getCurrentRoute().getValue() != null && mViewModel.isActive.getValue()) {
-            openRouteService.getRoute(mViewModel.getCurrentRoute().getValue(), mViewModel.getMethod().getValue(),
+        if (mViewModel.getActiveRoute() != null && mViewModel.getActiveRoute().isActive == 1) {
+            openRouteService.getRoute(mViewModel.getActiveRoute().getWaypoints().toArray(
+                    new GeoPoint[mViewModel.getActiveRoute().getWaypoints().size()]),
+                    mViewModel.getActiveRoute().getMethod(),
                     "en", R.drawable.waypoint_marker, Color.RED);
 
             if (!mViewModel.getIsGeofencing().getValue()) {
-                List<GeoPoint> waypoints = Arrays.asList(mViewModel.getCurrentRoute().getValue());
+                List<GeoPoint> waypoints = mViewModel.getActiveRoute().getWaypoints();
                 setupGF.setupGeoFencing(waypoints);
                 mViewModel.setIsGeofencing(true);
                 Log.d("@@@@@@@@@@@@@@", "Geofencing is setup");
-            } else if (mViewModel.getCurrentRoute().getValue() != null) {
-                setupGF.removeGeoFences(Arrays.asList(mViewModel.getCurrentRoute().getValue()));
+            } else if (mViewModel.getActiveRoute() != null) {
+                setupGF.removeGeoFences(mViewModel.getActiveRoute().getWaypoints());
                 mViewModel.setIsGeofencing(false);
             }
         }

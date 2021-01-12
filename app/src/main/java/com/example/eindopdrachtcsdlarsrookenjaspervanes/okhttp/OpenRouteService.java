@@ -181,6 +181,7 @@ public class OpenRouteService {
     }
 
     public void getRoute(GeoPoint[] waypoints, String method, String language, int icon, int color) {
+        Log.d("BEFORE GETROUTE", "in method getRoute");
         if (this.isConnected) {
             ArrayList<GeoPoint> points = new ArrayList<>();
             double[][] coordinates = new double[waypoints.length][2];
@@ -229,5 +230,6 @@ public class OpenRouteService {
                         }
                     });
         }
+        Log.d("AFTER GETROUTE", "out method getRoute");
     }
 }

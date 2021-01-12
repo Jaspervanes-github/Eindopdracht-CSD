@@ -11,9 +11,10 @@ import java.util.List;
 @Entity(tableName = "Route")
 public class Route {
 
-    public Route(String name, List<GeoPoint> waypoints, boolean isFromLocation) {
+    public Route(String name, List<GeoPoint> waypoints, String method, boolean isFromLocation) {
         this.name = name;
         this.waypoints = waypoints;
+        this.method = method;
         this.isFromLocation = isFromLocation;
         this.isActive = 0;
     }
@@ -32,6 +33,9 @@ public class Route {
 
     @ColumnInfo(name = "isActive")
     public int isActive;
+
+    @ColumnInfo(name = "method")
+    public String method;
 
     public int getUid() {
         return uid;
@@ -71,5 +75,13 @@ public class Route {
 
     public void setActive(int active) {
         isActive = active;
+    }
+
+    public String getMethod() {
+        return method;
+    }
+
+    public void setMethod(String method) {
+        this.method = method;
     }
 }
