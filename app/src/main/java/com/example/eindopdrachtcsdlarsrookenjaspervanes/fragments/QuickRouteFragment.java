@@ -134,7 +134,7 @@ public class QuickRouteFragment extends Fragment implements LifecycleOwner {
                                 .navigate(R.id.action_quickRouteFragment_to_mapFragment);
                     }else{
                         Toast.makeText(mViewModel.getMainActivity().getValue().getApplicationContext(),
-                                "You don't have enough points in your list!",Toast.LENGTH_SHORT).show();
+                                R.string.quickRoute_error,Toast.LENGTH_SHORT).show();
                     }
                 } else {
                     if (listItems.size() >= 2) {
@@ -148,7 +148,7 @@ public class QuickRouteFragment extends Fragment implements LifecycleOwner {
                                 .navigate(R.id.action_quickRouteFragment_to_mapFragment);
                     }else{
                         Toast.makeText(mViewModel.getMainActivity().getValue().getApplicationContext(),
-                                "You don't have enough points in your list!",Toast.LENGTH_SHORT).show();
+                                R.string.quickRoute_error,Toast.LENGTH_SHORT).show();
                     }
                 }
             }

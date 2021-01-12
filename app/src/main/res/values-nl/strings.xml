@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Eindopdracht CSD Lars Rook en Jasper van Es</string>
+    <string name="addButtonRecyclerView">Voeg nieuw eindpunt toe</string>
+    <string name="start_button">start</string>
+    <string name="save_button">opslaan</string>
+    <string name="remove_button">verwijderen</string>
+    <string name="quickRoute">Snelle route</string>
+    <string name="map">Map</string>
+    <string name="destinations">Bestemming</string>
+    <string name="textView_InputCoordinates">Coördinaat (Voorbeeld: 51.100,4.678):</string>
+    <string name="textView_Method">"Vervoer: "</string>
+    <string name="textView_checkBox">Start vanaf mijn locatie</string>
+    <string name="textView_name">"Naam: "</string>
+    <string name="textView_endpoint">"Bestemming: "</string>
+    <string name="textView_pointInBetween">"Tussenstops: "</string>
+    <string name="button_start">Start</string>
+    <string name="toast_isCenterModeTrue">Je bent nu in center-modus</string>
+    <string name="toast_isCenterModeFalse">Je bent niet langer in center-modus</string>
+    <string name="quickRoute_error">Je hebt niet genoeg punten in je lijst staan!</string>
+</resources>
