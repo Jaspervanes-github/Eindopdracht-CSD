@@ -1,7 +1,10 @@
 package com.example.eindopdrachtcsdlarsrookenjaspervanes;
 
+import android.app.Activity;
+
 import androidx.fragment.app.Fragment;
 
+import com.example.eindopdrachtcsdlarsrookenjaspervanes.database.entities.Route;
 import com.example.eindopdrachtcsdlarsrookenjaspervanes.fragments.MapFragment;
 
 public class Data {
@@ -20,6 +23,7 @@ public class Data {
 
     private Fragment currentFragment;
     private boolean dataLoaded;
+    private Route activeRoute;
 
     public Data() {
         this.currentFragment = new MapFragment();
@@ -40,5 +44,13 @@ public class Data {
 
     public void setDataLoaded(boolean dataLoaded) {
         this.dataLoaded = dataLoaded;
+    }
+
+    public void setActiveRoute(Route activeRoute){
+        this.activeRoute = activeRoute;
+    }
+
+    public Route getActiveRoute(){
+        return this.activeRoute;
     }
 }

@@ -19,4 +19,5 @@
     <string name="toast_isCenterModeFalse">Je bent niet langer in center-modus</string>
     <string name="quickRoute_error">Je hebt niet genoeg punten in je lijst staan!</string>
     <string name="toast_routeStopped">De route is gestopt</string>
+    <string name="toast_reachedDestination">Je hebt je bestemming berijkt</string>
 </resources>

@@ -6,9 +6,9 @@ import android.content.Intent;
 import android.util.Log;
 import android.widget.Toast;
 
-import androidx.lifecycle.ViewModelProvider;
-
-import com.example.eindopdrachtcsdlarsrookenjaspervanes.viewModels.ViewModel;
+import com.example.eindopdrachtcsdlarsrookenjaspervanes.Data;
+import com.example.eindopdrachtcsdlarsrookenjaspervanes.R;
+import com.example.eindopdrachtcsdlarsrookenjaspervanes.database.entities.Route;
 import com.google.android.gms.location.Geofence;
 import com.google.android.gms.location.GeofencingEvent;
 
@@ -18,7 +18,7 @@ import static android.content.ContentValues.TAG;
 
 public class GeoFenceBroadcastReceiver extends BroadcastReceiver {
 
-    private ViewModel mViewModel;
+    private Route activeRoute = Data.getInstance().getActiveRoute();
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -43,6 +43,20 @@ public class GeoFenceBroadcastReceiver extends BroadcastReceiver {
             case Geofence.GEOFENCE_TRANSITION_ENTER: {
                 Toast.makeText(context, "GEOFENCE_TRANSITION_ENTER", Toast.LENGTH_LONG).show();
                 Log.d(TAG, "GEOFENCE_TRANSITION_ENTER");
+
+                for (int i = 0; i < geofenceList.size(); i++) {
+                    if (activeRoute.isFromLocation()) {
+                        if (Integer.parseInt(geofenceList.get(i).getRequestId()) == activeRoute.getWaypoints().size() - 1) {
+                            Toast.makeText(context, R.string.toast_reachedDestination, Toast.LENGTH_SHORT).show();
+//                            mViewModel.unActiveRoute(activeRoute.getUid());
+                        }
+                    } else {
+                        if (Integer.parseInt(geofenceList.get(i).getRequestId()) == activeRoute.getWaypoints().size() - 2) {
+                            Toast.makeText(context, R.string.toast_reachedDestination, Toast.LENGTH_SHORT).show();
+//                            mViewModel.unActiveRoute(activeRoute.getUid());
+                        }
+                    }
+                }
                 break;
             }
             case Geofence.GEOFENCE_TRANSITION_DWELL: {

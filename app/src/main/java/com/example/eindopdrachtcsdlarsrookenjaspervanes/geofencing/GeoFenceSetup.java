@@ -74,7 +74,7 @@ public class GeoFenceSetup {
         for (int i = 0; i < waypoints.size(); i++) {
             System.out.println(waypoints.get(i).getLongitude() + "---" + waypoints.get(i).getLatitude());
             GeoPoint tempPoint = new GeoPoint(waypoints.get(i).getLatitude(), waypoints.get(i).getLongitude());
-            addGeoFence(tempPoint, 200, "#" + i);
+            addGeoFence(tempPoint, 50, i + "");
         }
     }
 

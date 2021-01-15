@@ -5,11 +5,11 @@ import android.app.Application;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.example.eindopdrachtcsdlarsrookenjaspervanes.Data;
 import com.example.eindopdrachtcsdlarsrookenjaspervanes.database.Database;
 import com.example.eindopdrachtcsdlarsrookenjaspervanes.database.daos.RouteDao;
 import com.example.eindopdrachtcsdlarsrookenjaspervanes.database.entities.Route;
@@ -17,7 +17,7 @@ import com.example.eindopdrachtcsdlarsrookenjaspervanes.models.EndPoint;
 
 import org.osmdroid.util.GeoPoint;
 
-import java.lang.reflect.Array;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -114,6 +114,7 @@ public class ViewModel extends AndroidViewModel {
                 this.unActiveRoute(this.getActiveRoute().getUid());
         }
         this.routeDao.setActiveRoute(routeID);
+        Data.getInstance().setActiveRoute(this.routeDao.getActiveRoute());
     }
 
     public void unActiveRoute(int routeID) {
