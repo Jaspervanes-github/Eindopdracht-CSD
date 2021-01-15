@@ -24,7 +24,7 @@ import java.util.List;
 public class ViewModel extends AndroidViewModel {
 
     private MutableLiveData<ArrayList<EndPoint>> allEndPoints;
-    private MutableLiveData<Route> selectedEndPoint;
+   // private MutableLiveData<Route> selectedEndPoint;
 
     private MutableLiveData<Boolean> isGeofencing;
     private MutableLiveData<GeoPoint> currentLocation;
@@ -38,7 +38,7 @@ public class ViewModel extends AndroidViewModel {
 
         this.allEndPoints = new MutableLiveData<>();
         this.allEndPoints.setValue(new ArrayList<>());
-        this.selectedEndPoint = new MutableLiveData<>();
+       //this.selectedEndPoint = new MutableLiveData<>();
 
         this.isGeofencing = new MutableLiveData<>(false);
         this.currentLocation = new MutableLiveData<>();
@@ -57,13 +57,13 @@ public class ViewModel extends AndroidViewModel {
         this.allEndPoints.setValue(allEndPoints);
     }
 
-    public LiveData<Route> getSelectedEndPoint() {
-        return selectedEndPoint;
-    }
-
-    public void setSelectedEndPoint(Route selectedRoute) {
-        this.selectedEndPoint.setValue(selectedRoute);
-    }
+//    public LiveData<Route> getSelectedEndPoint() {
+//        return selectedEndPoint;
+//    }
+//
+//    public void setSelectedEndPoint(Route selectedRoute) {
+//        this.selectedEndPoint.setValue(selectedRoute);
+//    }
 
     public LiveData<GeoPoint> getCurrentLocation() {
         return currentLocation;
@@ -89,6 +89,9 @@ public class ViewModel extends AndroidViewModel {
         this.isGeofencing.setValue(isGeofencing);
     }
 
+    public Route getRouteByID(int routeID){
+        return this.routeDao.findRouteByID(routeID);
+    }
 
     public List<Route> getAllSavedRoutes() {
         return this.routeDao.getAll();
@@ -104,17 +107,27 @@ public class ViewModel extends AndroidViewModel {
     }
 
     public void setActiveRoute(int routeID) {
-        if(this.routeDao.getActiveRoute() != null)
-        this.routeDao.delete(this.routeDao.getActiveRoute());
+        if(this.getActiveRoute() != null) {
+            if (this.getActiveRoute().getName().equals("###"))
+                this.deleteRoute(this.getActiveRoute());
+            else
+                this.unActiveRoute(this.getActiveRoute().getUid());
+        }
         this.routeDao.setActiveRoute(routeID);
     }
 
     public void unActiveRoute(int routeID) {
-        this.routeDao.unActiveRoute(routeID);
+        Route routeCheck = getRouteByID(routeID);
+        if(routeCheck.getName().equals("###"))
+            this.deleteRoute(routeCheck);
+        else
+            this.routeDao.unActiveRoute(routeID);
+
     }
 
     public Route getActiveRoute() {
         Log.d("BEFORE RETURN ROUTE", "in method getActiveRoute() in ViewModel");
         return this.routeDao.getActiveRoute();
     }
+
 }

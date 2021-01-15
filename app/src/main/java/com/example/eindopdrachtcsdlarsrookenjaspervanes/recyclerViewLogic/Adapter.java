@@ -16,10 +16,17 @@ public class Adapter extends RecyclerView.Adapter<Holder> {
 
     private List<Route> routes;
     private OnItemClickListener clickListener;
+    private RecyclerViewUpdate recyclerViewUpdate;
 
-    public Adapter(List<Route> endPoints, OnItemClickListener listener) {
-        this.routes = endPoints;
+    public Adapter(List<Route> endPoints, OnItemClickListener listener, RecyclerViewUpdate update) {
+        this.routes = new ArrayList<>();
+        endPoints.forEach(route -> {
+            if(!(route.getName().equals("###"))){
+               this.routes.add(route);
+            }
+        });
         this.clickListener = listener;
+        this.recyclerViewUpdate = update;
     }
 
 
@@ -35,6 +42,13 @@ public class Adapter extends RecyclerView.Adapter<Holder> {
     public void onBindViewHolder(@NonNull Holder holder, int position) {
         Route pointSelected = this.routes.get(position);
         holder.title.setText(pointSelected.getName());
+        holder.removeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                clickListener.removeRoute(pointSelected);
+                recyclerViewUpdate.update();
+            }
+        });
         System.out.println(holder.title.getText());
     }
 

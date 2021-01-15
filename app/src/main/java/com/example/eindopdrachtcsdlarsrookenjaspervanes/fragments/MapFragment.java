@@ -19,6 +19,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.TableLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -54,6 +55,7 @@ public class MapFragment extends Fragment implements LifecycleOwner {
     private IMapController mapController;
     private MapView mapView;
     private ImageButton ibCenterMap;
+    private ImageButton ibStopRoute;
 
     private boolean isCenterMode;
     private Marker currentLocation;
@@ -112,6 +114,19 @@ public class MapFragment extends Fragment implements LifecycleOwner {
                     if (!isCenterMode)
                         Toast.makeText(fragmentContext, R.string.toast_isCenterModeFalse, Toast.LENGTH_SHORT).show();
 //                    mapController.setCenter(mViewModel.getCurrentLocation().getValue());
+                }
+            }
+        });
+
+        ibStopRoute = view.findViewById(R.id.ibStopRoute);
+        ibStopRoute.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(mViewModel.getActiveRoute() != null) {
+                    mViewModel.unActiveRoute(mViewModel.getActiveRoute().getUid());
+                    mapView.getOverlays().clear();
+                    getLocation();
+                    Toast.makeText(requireActivity().getApplicationContext(), R.string.toast_routeStopped, Toast.LENGTH_SHORT).show();
                 }
             }
         });

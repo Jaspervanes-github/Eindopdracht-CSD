@@ -6,8 +6,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
-
     <org.osmdroid.views.MapView
         android:id="@+id/mapView"
         android:layout_width="match_parent"
@@ -18,7 +16,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0">
-</org.osmdroid.views.MapView>
+
+    </org.osmdroid.views.MapView>
 
     <ImageButton
         android:id="@+id/ibCenterMap"
@@ -32,6 +31,17 @@
         app:layout_constraintVertical_bias="0.924"
         app:srcCompat="@drawable/center_map" />
 
+    <ImageButton
+        android:id="@+id/ibStopRoute"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.089"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.924"
+        app:srcCompat="@drawable/ic_baseline_stop_24" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

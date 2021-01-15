@@ -22,6 +22,7 @@ import com.example.eindopdrachtcsdlarsrookenjaspervanes.database.entities.Route;
 import com.example.eindopdrachtcsdlarsrookenjaspervanes.models.EndPoint;
 import com.example.eindopdrachtcsdlarsrookenjaspervanes.recyclerViewLogic.Adapter;
 import com.example.eindopdrachtcsdlarsrookenjaspervanes.recyclerViewLogic.OnItemClickListener;
+import com.example.eindopdrachtcsdlarsrookenjaspervanes.recyclerViewLogic.RecyclerViewUpdate;
 import com.example.eindopdrachtcsdlarsrookenjaspervanes.viewModels.MapViewModel;
 import com.example.eindopdrachtcsdlarsrookenjaspervanes.viewModels.RouteListViewModel;
 import com.example.eindopdrachtcsdlarsrookenjaspervanes.viewModels.ViewModel;
@@ -31,7 +32,7 @@ import org.osmdroid.util.GeoPoint;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RouteListFragment extends Fragment implements OnItemClickListener, LifecycleOwner {
+public class RouteListFragment extends Fragment implements OnItemClickListener, RecyclerViewUpdate, LifecycleOwner {
 
     private ViewModel mViewModel;
     private RecyclerView recyclerView;
@@ -54,9 +55,10 @@ public class RouteListFragment extends Fragment implements OnItemClickListener, 
         this.fragment = this;
         mViewModel = new ViewModelProvider(requireActivity()).get(ViewModel.class);
         recyclerView = view.findViewById(R.id.recyclerView);
-        adapter = new Adapter(mViewModel.getAllSavedRoutes(), this);
+        adapter = new Adapter(mViewModel.getAllSavedRoutes(), this, this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
+
 
         Button addNewButtonTest = view.findViewById(R.id.button_Add_New_Endpoint);
         addNewButtonTest.setOnClickListener(new View.OnClickListener() {
@@ -89,20 +91,34 @@ public class RouteListFragment extends Fragment implements OnItemClickListener, 
 
     @Override
     public void onItemClick(int clickPosition) {
-        mViewModel.setSelectedEndPoint(mViewModel.getAllSavedRoutes().get(clickPosition));
-        Navigation.findNavController(getActivity(), R.id.fragmentContainer).navigate(R.id.action_routeListFragment_to_detailFragment);
+        //mViewModel.setSelectedEndPoint(mViewModel.getAllSavedRoutes().get(clickPosition));
+        Bundle bundle = new Bundle();
+        bundle.putInt("routeID", mViewModel.getAllSavedRoutes().get(clickPosition).getUid());
+        Navigation.findNavController(getActivity(), R.id.fragmentContainer).navigate(R.id.action_routeListFragment_to_detailFragment, bundle);
     }
 
-    private Observer<ArrayList<EndPoint>> fragmentObserver(){
-        Observer<ArrayList<EndPoint>> observer = new Observer<ArrayList<EndPoint>>() {
-            @Override
-            public void onChanged(ArrayList<EndPoint> endPoints) {
-                recyclerView = view.findViewById(R.id.recyclerView);
-                adapter = new Adapter(mViewModel.getAllSavedRoutes(), fragment);
-                recyclerView.setAdapter(adapter);
-                recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
-            }
-        };
-        return observer;
+    @Override
+    public void removeRoute(Route route) {
+        mViewModel.deleteRoute(route);
+    }
+
+//    private Observer<ArrayList<EndPoint>> fragmentObserver(){
+//        Observer<ArrayList<EndPoint>> observer = new Observer<ArrayList<EndPoint>>() {
+//            @Override
+//            public void onChanged(ArrayList<EndPoint> endPoints) {
+//                recyclerView = view.findViewById(R.id.recyclerView);
+//                adapter = new Adapter(mViewModel.getAllSavedRoutes(), fragment, );
+//                recyclerView.setAdapter(adapter);
+//                recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
+//            }
+//        };
+//        return observer;
+//    }
+
+    @Override
+    public void update() {
+        adapter = new Adapter(mViewModel.getAllSavedRoutes(), this, this);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
     }
 }
