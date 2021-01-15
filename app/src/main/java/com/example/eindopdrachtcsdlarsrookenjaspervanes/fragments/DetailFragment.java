@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -14,6 +15,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 
 import com.example.eindopdrachtcsdlarsrookenjaspervanes.Data;
 import com.example.eindopdrachtcsdlarsrookenjaspervanes.R;
@@ -29,9 +31,17 @@ import java.sql.SQLOutput;
 
 public class DetailFragment extends Fragment implements LifecycleOwner {
     private ViewModel mViewModel;
+    private int selectedRouteID;
 
     public static DetailFragment newInstance() {
         return new DetailFragment();
+    }
+
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        selectedRouteID = requireArguments().getInt("routeID");
     }
 
     @Nullable
@@ -45,7 +55,7 @@ public class DetailFragment extends Fragment implements LifecycleOwner {
         TextView textView_endpoint = view.findViewById(R.id.detailFragment_textView_endpoint_value);
         ListView listView_pointInBetween = view.findViewById(R.id.detailFragment_listView_pointsInBetween);
 
-        Route selectedPoint = mViewModel.getSelectedEndPoint().getValue();
+        Route selectedPoint = mViewModel.getRouteByID(selectedRouteID);
         System.out.println(selectedPoint.name);
         System.out.println(selectedPoint.uid);
         textView_name.setText(selectedPoint.getName());
@@ -56,6 +66,16 @@ public class DetailFragment extends Fragment implements LifecycleOwner {
         arrayAdapter.addAll(selectedPoint.getWaypoints());
         listView_pointInBetween.setAdapter(arrayAdapter);
         arrayAdapter.notifyDataSetChanged();
+
+
+        Button start_button = view.findViewById(R.id.detailFragment_button_start);
+        start_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mViewModel.setActiveRoute(selectedRouteID);
+                Navigation.findNavController(requireActivity(), R.id.fragmentContainer).navigate(R.id.action_detailFragment_to_mapFragment);
+            }
+        });
 
         return view;
     }

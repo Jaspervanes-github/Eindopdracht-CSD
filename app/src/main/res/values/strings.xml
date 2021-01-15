@@ -25,4 +25,5 @@
     <string name="toast_isCenterModeTrue">You are now in center-mode</string>
     <string name="toast_isCenterModeFalse">You are no longer in center-mode</string>
     <string name="quickRoute_error">You don\'t have enough points in your list!</string>
+    <string name="toast_routeStopped">The route has been stopped</string>
 </resources>

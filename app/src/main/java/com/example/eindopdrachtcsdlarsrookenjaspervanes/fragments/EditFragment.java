@@ -15,6 +15,7 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -117,14 +118,25 @@ public class EditFragment extends Fragment implements LifecycleOwner {
                 if(editTextInputName.getText().toString() != null){
                     name = editTextInputName.getText().toString();
                 }
-
                 String method = spinner.getSelectedItem().toString().replaceAll("_", "-").toLowerCase();
 
+                boolean startFromMyLocation = checkBoxStartLocation.isChecked();
+                if(startFromMyLocation){
+                    if(listItems.size() >= 1){
+                        listItems.add(0, mViewModel.getCurrentLocation().getValue());
+                    } else {
+                        Toast.makeText(requireActivity().getApplicationContext(), R.string.quickRoute_error, Toast.LENGTH_SHORT).show();
+                    }
+                } else{
+                    if(!(listItems.size() >= 2)){
+                        Toast.makeText(requireActivity().getApplicationContext(), R.string.quickRoute_error, Toast.LENGTH_SHORT).show();
+                    }
+                }
 
                 Route newRoute = new Route(name, listItems, method, checkBoxStartLocation.isChecked());
                 mViewModel.addRoute(newRoute);
 
-                Navigation.findNavController(requireActivity(), R.id.fragmentContainer).navigate(R.id.action_detailFragment_to_routeListFragment);
+                Navigation.findNavController(requireActivity(), R.id.fragmentContainer).navigate(R.id.action_editFragment_to_routeListFragment);
             }
         });
 
