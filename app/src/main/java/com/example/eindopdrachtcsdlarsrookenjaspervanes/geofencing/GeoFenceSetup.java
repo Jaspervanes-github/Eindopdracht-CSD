@@ -34,22 +34,21 @@ public class GeoFenceSetup {
     private GeoFenceHelper geoFenceHelper;
     private int BACKGROUND_LOCATION_ACCESS_REQUEST_CODE = 10002;
 
-    public GeoFenceSetup(Activity appActivity) {
+    public GeoFenceSetup(Context context, Activity appActivity) {
+        this.context = context;
         this.appActivity = appActivity;
-        this.context = appActivity.getApplicationContext();
     }
 
     public void setupGeoFencing(List<GeoPoint> waypoints) {
         checkFineLocationPermission();
-
 
         geofencingClient = LocationServices.getGeofencingClient(context);
         geoFenceHelper = new GeoFenceHelper(context);
 
         if (Build.VERSION.SDK_INT >= 29) {
             //If API is higher then 29 we need background permission
-
-            if (ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_BACKGROUND_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            System.out.println("in if in setupgf");
+            if (ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_BACKGROUND_LOCATION) == PackageManager.PERMISSION_GRANTED) {//ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_BACKGROUND_LOCATION) == PackageManager.PERMISSION_GRANTED
                 addFences(waypoints);
             } else {
                 //Permission is not granted!! Need to request it..
@@ -74,14 +73,14 @@ public class GeoFenceSetup {
 
         for (int i = 0; i < waypoints.size(); i++) {
             System.out.println(waypoints.get(i).getLongitude() + "---" + waypoints.get(i).getLatitude());
-            GeoPoint tempPoint = new GeoPoint(waypoints.get(i).getLongitude(), waypoints.get(i).getLatitude());
-            addGeoFence(tempPoint, 45, "#" + i);
+            GeoPoint tempPoint = new GeoPoint(waypoints.get(i).getLatitude(), waypoints.get(i).getLongitude());
+            addGeoFence(tempPoint, 200, "#" + i);
         }
     }
 
     private void addGeoFence(GeoPoint geoPoint, float radius, String ID) {
         checkFineLocationPermission();
-
+        System.out.println("In ADDGEOFENCE: " + geoPoint.getLongitude() + " : " + geoPoint.getLatitude());
 
         Geofence geofence = geoFenceHelper.getGeofence(ID, geoPoint, radius,
                 Geofence.GEOFENCE_TRANSITION_DWELL | Geofence.GEOFENCE_TRANSITION_ENTER | Geofence.GEOFENCE_TRANSITION_EXIT);
@@ -94,6 +93,7 @@ public class GeoFenceSetup {
         geofencingClient.addGeofences(geofencingRequest, pendingIntent).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
+                System.out.println("SUCCESSFULLY ADDED A POINT");
                 Log.v(TAG, "Geofence is added... ");
             }
 
@@ -101,9 +101,9 @@ public class GeoFenceSetup {
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
+                System.out.println("FAILED TO ADD POINT");
                 Log.v(TAG, e.getLocalizedMessage());
             }
-
 
         });
     }

@@ -65,7 +65,6 @@ public class MapFragment extends Fragment implements LifecycleOwner {
         return new MapFragment();
     }
 
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -97,7 +96,7 @@ public class MapFragment extends Fragment implements LifecycleOwner {
         mapView.setBuiltInZoomControls(true);
 
         openRouteService = new OpenRouteService(mapView, fragmentContext, view);
-        setupGF = new GeoFenceSetup(requireActivity());
+        setupGF = new GeoFenceSetup(getContext(), getActivity());
 
         refreshMap();
 
@@ -148,16 +147,19 @@ public class MapFragment extends Fragment implements LifecycleOwner {
                 currentLocation = startPoint;
                 mViewModel.setCurrentLocation(currentLocation.getPosition());
 
-                //removes old location of user
-                List<GeoPoint> tempList = new ArrayList<>();
-                if (mViewModel.getActiveRoute() != null)
-                    tempList.add(mViewModel.getActiveRoute().getWaypoints().get(0));
-                setupGF.removeGeoFences(tempList);
+                Log.d("MY_LOCATION", currentLocation.getPosition() + "");
 
-                //adds new location of user
-                tempList.clear();
-                tempList.add(currentLocation.getPosition());
-                setupGF.setupGeoFencing(tempList);
+                //removes old location of user
+//                List<GeoPoint> tempList = new ArrayList<>();
+//                if (mViewModel.getActiveRoute() != null)
+//                    tempList.add(mViewModel.getActiveRoute().getWaypoints().get(0));
+//                setupGF.removeGeoFences(tempList);
+//
+//                //adds new location of user
+//                tempList.clear();
+//                tempList.add(currentLocation.getPosition());
+//
+//                setupGF.setupGeoFencing(tempList);
 
                 refreshMap();
 
@@ -180,11 +182,18 @@ public class MapFragment extends Fragment implements LifecycleOwner {
 
             if (!mViewModel.getIsGeofencing().getValue()) {
                 List<GeoPoint> waypoints = mViewModel.getActiveRoute().getWaypoints();
+                if(mViewModel.getActiveRoute().isFromLocation()){
+                    waypoints.remove(0);
+                }
                 setupGF.setupGeoFencing(waypoints);
                 mViewModel.setIsGeofencing(true);
                 Log.d("@@@@@@@@@@@@@@", "Geofencing is setup");
             } else if (mViewModel.getActiveRoute() != null) {
-                setupGF.removeGeoFences(mViewModel.getActiveRoute().getWaypoints());
+                List<GeoPoint> waypoints = mViewModel.getActiveRoute().getWaypoints();
+                if(mViewModel.getActiveRoute().isFromLocation()){
+                    waypoints.remove(0);
+                }
+                setupGF.removeGeoFences(waypoints);
                 mViewModel.setIsGeofencing(false);
             }
         }
