@@ -4,6 +4,7 @@ import com.example.eindopdrachtcsdlarsrookenjaspervanes.Method;
 
 import org.junit.Before;
 import org.junit.Test;
+
 import org.osmdroid.api.IGeoPoint;
 import org.osmdroid.util.GeoPoint;
 
