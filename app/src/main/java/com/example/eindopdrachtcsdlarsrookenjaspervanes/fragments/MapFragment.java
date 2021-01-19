@@ -1,10 +1,5 @@
 package com.example.eindopdrachtcsdlarsrookenjaspervanes.fragments;
 
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.lifecycle.LifecycleOwner;
-import androidx.lifecycle.ViewModelProvider;
-
 import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
@@ -19,7 +14,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
-import android.widget.TableLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -27,12 +21,13 @@ import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.eindopdrachtcsdlarsrookenjaspervanes.Data;
 import com.example.eindopdrachtcsdlarsrookenjaspervanes.R;
 import com.example.eindopdrachtcsdlarsrookenjaspervanes.geofencing.GeoFenceSetup;
 import com.example.eindopdrachtcsdlarsrookenjaspervanes.okhttp.OpenRouteService;
-import com.example.eindopdrachtcsdlarsrookenjaspervanes.viewModels.MapViewModel;
 import com.example.eindopdrachtcsdlarsrookenjaspervanes.viewModels.ViewModel;
 
 import org.osmdroid.api.IMapController;
@@ -42,8 +37,6 @@ import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
 import org.osmdroid.views.overlay.Marker;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 
