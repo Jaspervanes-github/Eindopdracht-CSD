@@ -1,7 +1,5 @@
 package com.example.eindopdrachtcsdlarsrookenjaspervanes;
 
-import android.app.Activity;
-
 import androidx.fragment.app.Fragment;
 
 import com.example.eindopdrachtcsdlarsrookenjaspervanes.database.entities.Route;
@@ -36,14 +34,6 @@ public class Data {
 
     public void setCurrentFragment(Fragment currentFragment) {
         this.currentFragment = currentFragment;
-    }
-
-    public boolean isDataLoaded() {
-        return dataLoaded;
-    }
-
-    public void setDataLoaded(boolean dataLoaded) {
-        this.dataLoaded = dataLoaded;
     }
 
     public void setActiveRoute(Route activeRoute){
