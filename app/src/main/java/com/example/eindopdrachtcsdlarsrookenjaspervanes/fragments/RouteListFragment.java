@@ -23,8 +23,6 @@ import com.example.eindopdrachtcsdlarsrookenjaspervanes.models.EndPoint;
 import com.example.eindopdrachtcsdlarsrookenjaspervanes.recyclerViewLogic.Adapter;
 import com.example.eindopdrachtcsdlarsrookenjaspervanes.recyclerViewLogic.OnItemClickListener;
 import com.example.eindopdrachtcsdlarsrookenjaspervanes.recyclerViewLogic.RecyclerViewUpdate;
-import com.example.eindopdrachtcsdlarsrookenjaspervanes.viewModels.MapViewModel;
-import com.example.eindopdrachtcsdlarsrookenjaspervanes.viewModels.RouteListViewModel;
 import com.example.eindopdrachtcsdlarsrookenjaspervanes.viewModels.ViewModel;
 
 import org.osmdroid.util.GeoPoint;
