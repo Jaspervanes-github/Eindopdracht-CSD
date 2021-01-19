@@ -66,17 +66,6 @@ public class OpenRouteService {
                 post(requestBody).addHeader("Authorization", api_key).build();
         return request;
     }
-//
-//    private Request createPutRequest(String url, String json) {
-//        RequestBody requestBody = RequestBody.create(json, JSON);
-//        Request request = new Request.Builder().url("http://" + this.ipAddress + ":" + this.port + "/api/" + this.username + url).put(requestBody).build();
-//        return request;
-//    }
-//
-//    private Request createDeleteRequest(String url) {
-//        Request request = new Request.Builder().url("http://" + this.ipAddress + ":" + this.port + "/api/" + this.username + url).delete().build();
-//        return request;
-//    }
 
     private static JSONArray decodeGeometry(String encodedGeometry, boolean inclElevation) {
         JSONArray geometry = new JSONArray();

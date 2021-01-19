@@ -164,18 +164,6 @@ public class MapFragment extends Fragment implements LifecycleOwner {
 
                 Log.d("MY_LOCATION", currentLocation.getPosition() + "");
 
-                //removes old location of user
-//                List<GeoPoint> tempList = new ArrayList<>();
-//                if (mViewModel.getActiveRoute() != null)
-//                    tempList.add(mViewModel.getActiveRoute().getWaypoints().get(0));
-//                setupGF.removeGeoFences(tempList);
-//
-//                //adds new location of user
-//                tempList.clear();
-//                tempList.add(currentLocation.getPosition());
-//
-//                setupGF.setupGeoFencing(tempList);
-
                 refreshMap();
 
                 mapView.getOverlays().add(startPoint);

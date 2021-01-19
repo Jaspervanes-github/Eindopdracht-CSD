@@ -64,16 +64,6 @@ public class RouteListFragment extends Fragment implements OnItemClickListener, 
         addNewButtonTest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                List<GeoPoint> test = new ArrayList<>();
-//                mViewModel.addRoute(new Route("slik", test, true));
-//                mViewModel.addRoute(new Route("een", test, false));
-//                mViewModel.addRoute(new Route("pik", test, true));
-//                adapter.listChanged(mViewModel.getAllSavedRoutes());
-//                for(Route r : mViewModel.getAllSavedRoutes()){
-//                    System.out.println(r.name);
-//                }
-//                System.out.println(mViewModel.getAllSavedRoutes().size());
-//
                 Navigation.findNavController(getActivity(), R.id.fragmentContainer).navigate(R.id.action_routeListFragment_to_editFragment);
 
             }
@@ -81,13 +71,6 @@ public class RouteListFragment extends Fragment implements OnItemClickListener, 
 
         return view;
     }
-
-//    @Override
-//    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-//        super.onActivityCreated(savedInstanceState);
-//        mViewModel = new ViewModelProvider(this).get(RouteListViewModel.class);
-//        // TODO: Use the ViewModel
-//    }
 
     @Override
     public void onItemClick(int clickPosition) {
@@ -101,19 +84,6 @@ public class RouteListFragment extends Fragment implements OnItemClickListener, 
     public void removeRoute(Route route) {
         mViewModel.deleteRoute(route);
     }
-
-//    private Observer<ArrayList<EndPoint>> fragmentObserver(){
-//        Observer<ArrayList<EndPoint>> observer = new Observer<ArrayList<EndPoint>>() {
-//            @Override
-//            public void onChanged(ArrayList<EndPoint> endPoints) {
-//                recyclerView = view.findViewById(R.id.recyclerView);
-//                adapter = new Adapter(mViewModel.getAllSavedRoutes(), fragment, );
-//                recyclerView.setAdapter(adapter);
-//                recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
-//            }
-//        };
-//        return observer;
-//    }
 
     @Override
     public void update() {

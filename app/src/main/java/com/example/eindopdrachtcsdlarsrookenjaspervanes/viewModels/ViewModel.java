@@ -24,7 +24,6 @@ import java.util.List;
 public class ViewModel extends AndroidViewModel {
 
     private MutableLiveData<ArrayList<EndPoint>> allEndPoints;
-   // private MutableLiveData<Route> selectedEndPoint;
 
     private MutableLiveData<Boolean> isGeofencing;
     private MutableLiveData<GeoPoint> currentLocation;
@@ -38,7 +37,6 @@ public class ViewModel extends AndroidViewModel {
 
         this.allEndPoints = new MutableLiveData<>();
         this.allEndPoints.setValue(new ArrayList<>());
-       //this.selectedEndPoint = new MutableLiveData<>();
 
         this.isGeofencing = new MutableLiveData<>(false);
         this.currentLocation = new MutableLiveData<>();
@@ -56,14 +54,6 @@ public class ViewModel extends AndroidViewModel {
     public void setAllEndPoints(ArrayList<EndPoint> allEndPoints) {
         this.allEndPoints.setValue(allEndPoints);
     }
-
-//    public LiveData<Route> getSelectedEndPoint() {
-//        return selectedEndPoint;
-//    }
-//
-//    public void setSelectedEndPoint(Route selectedRoute) {
-//        this.selectedEndPoint.setValue(selectedRoute);
-//    }
 
     public LiveData<GeoPoint> getCurrentLocation() {
         return currentLocation;

@@ -208,16 +208,5 @@ public class EditFragment extends Fragment implements LifecycleOwner {
         });
 
     }
-
-
-    private Observer<Fragment> fragmentObserver(){
-        Observer<Fragment> observer = new Observer<Fragment>() {
-            @Override
-            public void onChanged(Fragment fragment) {
-
-            }
-        };
-        return observer;
-    }
 }
 

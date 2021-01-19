@@ -74,9 +74,7 @@ public class QuickRouteFragment extends Fragment implements LifecycleOwner {
         mViewModel = new ViewModelProvider(requireActivity()).get(ViewModel.class);
 
         textViewInputCoordinates = view.findViewById(R.id.textViewInputCoordinates);
-//        textViewInputCoordinates.setText("Coordinate (Example: 51.100,4.678):");
         textViewMethod = view.findViewById(R.id.textViewMethod);
-//        textViewMethod.setText("Method:");
 
         editTextInputCoordinates = view.findViewById(R.id.editTextInputCoordinates);
 
