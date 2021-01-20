@@ -9,23 +9,20 @@ public class Data {
 
     private static Data data;
 
-    public static Data getInstance(){
-        if(data == null){
+    public static Data getInstance() {
+        if (data == null) {
             data = new Data();
             return data;
-        }
-        else
+        } else
             return data;
     }
 
 
     private Fragment currentFragment;
-    private boolean dataLoaded;
     private Route activeRoute;
 
     public Data() {
         this.currentFragment = new MapFragment();
-        this.dataLoaded = false;
     }
 
     public Fragment getCurrentFragment() {
@@ -36,11 +33,11 @@ public class Data {
         this.currentFragment = currentFragment;
     }
 
-    public void setActiveRoute(Route activeRoute){
+    public void setActiveRoute(Route activeRoute) {
         this.activeRoute = activeRoute;
     }
 
-    public Route getActiveRoute(){
+    public Route getActiveRoute() {
         return this.activeRoute;
     }
 }
