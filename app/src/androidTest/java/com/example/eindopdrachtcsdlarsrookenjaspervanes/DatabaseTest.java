@@ -57,11 +57,52 @@ public class DatabaseTest {
 
     @Test
     public void TestDelete(){
+        List<GeoPoint> testWaypoints = new ArrayList<>();
+        testWaypoints.add(new GeoPoint(51.4, 4.1));
+        String  method = Method.DRIVING_CAR.toString().replaceAll("_", "-").toLowerCase();
+        Route testRoute = new Route("testRoute", testWaypoints, method, false);
 
+        List<GeoPoint> testWaypoints2 = new ArrayList<>();
+        testWaypoints2.add(new GeoPoint(48.1, 4.1));
+        String  method2 = Method.FOOT_WALKING.toString().replaceAll("_", "-").toLowerCase();
+        Route testRoute2 = new Route("testRoute2", testWaypoints2, method2, false);
+
+        database.routeDao().insertRoute(testRoute);
+        database.routeDao().insertRoute(testRoute2);
+
+        database.routeDao().delete(testRoute);
+
+        List<Route> allRoutes = database.routeDao().getAll();
+        boolean contains = allRoutes.contains(testRoute);
+
+        assertEquals(contains, false);
     }
 
      @Test
     public void TestUpdate(){
+         List<GeoPoint> testWaypoints = new ArrayList<>();
+         testWaypoints.add(new GeoPoint(51.4, 4.1));
+         String  method = Method.DRIVING_CAR.toString().replaceAll("_", "-").toLowerCase();
+         Route testRoute = new Route("testRoute", testWaypoints, method, false);
 
+         List<GeoPoint> testWaypoints2 = new ArrayList<>();
+         testWaypoints2.add(new GeoPoint(48.1, 4.1));
+         String  method2 = Method.FOOT_WALKING.toString().replaceAll("_", "-").toLowerCase();
+         Route testRoute2 = new Route("testRoute2", testWaypoints2, method2, false);
+
+         long idTestRoute1 = database.routeDao().insertRoute(testRoute);
+         testRoute.setUid((int)idTestRoute1);
+         long idTestRoute2 = database.routeDao().insertRoute(testRoute2);
+         testRoute2.setUid((int)idTestRoute2);
+
+         List<GeoPoint> newTestPoints = new ArrayList<>();
+         newTestPoints.add(new GeoPoint(49.1, 4.1));
+
+         database.routeDao().updateRoute(testRoute.getUid(), newTestPoints);
+
+         List<Route> allRoutes = database.routeDao().getAll();
+         List<GeoPoint> newWayPoints = allRoutes.get(0).getWaypoints();
+
+         assertEquals(newWayPoints, newTestPoints);
     }
 }
