@@ -124,6 +124,9 @@ public class EditFragment extends Fragment implements LifecycleOwner {
                 if(startFromMyLocation){
                     if(listItems.size() >= 1){
                         listItems.add(0, mViewModel.getCurrentLocation().getValue());
+                        Route newRoute = new Route(name, listItems, method, checkBoxStartLocation.isChecked());
+                        mViewModel.addRoute(newRoute);
+                        Navigation.findNavController(requireActivity(), R.id.fragmentContainer).navigate(R.id.action_editFragment_to_routeListFragment);
                     } else {
                         Toast.makeText(requireActivity().getApplicationContext(), R.string.quickRoute_error, Toast.LENGTH_SHORT).show();
                     }
@@ -131,12 +134,15 @@ public class EditFragment extends Fragment implements LifecycleOwner {
                     if(!(listItems.size() >= 2)){
                         Toast.makeText(requireActivity().getApplicationContext(), R.string.quickRoute_error, Toast.LENGTH_SHORT).show();
                     }
+                    else {
+                        Route newRoute = new Route(name, listItems, method, checkBoxStartLocation.isChecked());
+                        mViewModel.addRoute(newRoute);
+
+                        Navigation.findNavController(requireActivity(), R.id.fragmentContainer).navigate(R.id.action_editFragment_to_routeListFragment);
+                    }
+
                 }
 
-                Route newRoute = new Route(name, listItems, method, checkBoxStartLocation.isChecked());
-                mViewModel.addRoute(newRoute);
-
-                Navigation.findNavController(requireActivity(), R.id.fragmentContainer).navigate(R.id.action_editFragment_to_routeListFragment);
             }
         });
 
